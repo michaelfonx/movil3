@@ -53,7 +53,7 @@ class BuscarContratoActivity : AppCompatActivity() {
             })
         }
 
-        // BOTON VOLVER
+
         findViewById<Button>(R.id.btnVolver).setOnClickListener {
             finish()
         }

@@ -28,31 +28,27 @@ class ProductosActivity : AppCompatActivity() {
         recycler = findViewById(R.id.recyclerContratos)
         recycler.layoutManager = LinearLayoutManager(this)
 
-        // BOTONES
+
         val btnBuscar = findViewById<Button>(R.id.btnBuscarId)
         val btnCrear = findViewById<Button>(R.id.btnCrear)
         val btnActualizar = findViewById<Button>(R.id.btnActualizar)
         val btnEliminar = findViewById<Button>(R.id.btnEliminar)
 
-        // ABRIR PANTALLA BUSCAR
         btnBuscar.setOnClickListener {
             val intent = Intent(this, BuscarContratoActivity::class.java)
             startActivity(intent)
         }
 
-        // ABRIR PANTALLA CREAR
         btnCrear.setOnClickListener {
             val intent = Intent(this, CrearContratoActivity::class.java)
             startActivity(intent)
         }
 
-        // ABRIR PANTALLA ACTUALIZAR
         btnActualizar.setOnClickListener {
             val intent = Intent(this, ActualizarContratoActivity::class.java)
             startActivity(intent)
         }
 
-        // ABRIR PANTALLA ELIMINAR
         btnEliminar.setOnClickListener {
             val intent = Intent(this, EliminarContratoActivity::class.java)
             startActivity(intent)
@@ -61,7 +57,6 @@ class ProductosActivity : AppCompatActivity() {
         obtenerCronogramas()
     }
 
-    // GET TODOS
     private fun obtenerCronogramas(){
 
         RetrofitInstance.api.obtenerCronogramas().enqueue(object :
