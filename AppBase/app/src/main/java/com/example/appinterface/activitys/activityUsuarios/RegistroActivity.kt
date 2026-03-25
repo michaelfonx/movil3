@@ -1,9 +1,8 @@
 package com.example.appinterface.activitys.activityUsuarios
 
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
+import android.util.Log
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.appinterface.Api.RetrofitInstance
 import com.example.appinterface.R
@@ -19,6 +18,7 @@ class RegistroActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registro)
 
+
         val primerNombre = findViewById<EditText>(R.id.txtPrimerNombre)
         val segundoNombre = findViewById<EditText>(R.id.txtSegundoNombre)
         val primerApellido = findViewById<EditText>(R.id.txtPrimerApellido)
@@ -29,23 +29,55 @@ class RegistroActivity : AppCompatActivity() {
         val password = findViewById<EditText>(R.id.txtPassword)
 
         val btnRegistrar = findViewById<Button>(R.id.btnRegistrar)
+        val cancelar = findViewById<TextView>(R.id.txtCancelar)
+
+
+        cancelar.setOnClickListener {
+            finish()
+            overridePendingTransition(
+                R.anim.slide_in_right,
+                R.anim.slide_out_left
+            )
+        }
+
 
         btnRegistrar.setOnClickListener {
 
-            if(
+            val correoText = correo.text.toString().trim()
+            val passwordText = password.text.toString().trim()
+
+
+            if (
                 primerNombre.text.isEmpty() ||
                 primerApellido.text.isEmpty() ||
                 documento.text.isEmpty() ||
-                correo.text.isEmpty() ||
-                password.text.isEmpty()
-            ){
-                Toast.makeText(
-                    this,
-                    "Complete todos los campos",
-                    Toast.LENGTH_LONG
-                ).show()
+                correoText.isEmpty() ||
+                passwordText.isEmpty()
+            ) {
+                Toast.makeText(this, "Complete todos los campos", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
+
+            if (!correoText.contains("@")) {
+                Toast.makeText(this, "Correo inválido", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
+            if (passwordText.length < 6) {
+                Toast.makeText(this, "Contraseña mínimo 6 caracteres", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
+            btnRegistrar.isEnabled = false
+
+            val documentoInt = try {
+                documento.text.toString().toInt()
+            } catch (e: Exception) {
+                Toast.makeText(this, "Documento inválido", Toast.LENGTH_LONG).show()
+                btnRegistrar.isEnabled = true
+                return@setOnClickListener
+            }
+
 
             val usuario = Usuario(
                 null,
@@ -53,45 +85,68 @@ class RegistroActivity : AppCompatActivity() {
                 segundoNombre.text.toString(),
                 primerApellido.text.toString(),
                 segundoApellido.text.toString(),
-                documento.text.toString().toInt(),
-                correo.text.toString(),
+                documentoInt,
+                correoText,
                 direccion.text.toString(),
-                password.text.toString()
+                passwordText
             )
 
+
             RetrofitInstance.usuarioApi.registrarUsuario(usuario)
-                .enqueue(object : Callback<Void> {
+                .enqueue(object : Callback<Map<String, String>> {
 
                     override fun onResponse(
-                        call: Call<Void>,
-                        response: Response<Void>
+                        call: Call<Map<String, String>>,
+                        response: Response<Map<String, String>>
                     ) {
 
-                        if(response.isSuccessful){
+                        btnRegistrar.isEnabled = true
+
+                        if (response.isSuccessful) {
+
+                            val mensaje = response.body()?.get("mensaje")
+
+                            Log.d("API_OK", mensaje ?: "Registro exitoso")
 
                             Toast.makeText(
                                 this@RegistroActivity,
-                                "Usuario creado correctamente",
+                                mensaje ?: "Usuario creado correctamente",
                                 Toast.LENGTH_LONG
                             ).show()
 
-                            finish()
 
-                        }else{
+                            finish()
+                            overridePendingTransition(
+                                R.anim.slide_in_right,
+                                R.anim.slide_out_left
+                            )
+
+                        } else {
+
+                            val error = response.errorBody()?.string()
+
+                            Log.e("API_ERROR", error ?: "Error desconocido")
 
                             Toast.makeText(
                                 this@RegistroActivity,
-                                "Error al crear usuario",
+                                "Error: ${error ?: "Error desconocido"}",
                                 Toast.LENGTH_LONG
                             ).show()
                         }
                     }
 
-                    override fun onFailure(call: Call<Void>, t: Throwable) {
+                    override fun onFailure(
+                        call: Call<Map<String, String>>,
+                        t: Throwable
+                    ) {
+
+                        btnRegistrar.isEnabled = true
+
+                        Log.e("API_ERROR", t.message ?: "Error conexión")
 
                         Toast.makeText(
                             this@RegistroActivity,
-                            "Error conectando con la API",
+                            "Error conexión: ${t.message}",
                             Toast.LENGTH_LONG
                         ).show()
                     }

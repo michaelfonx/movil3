@@ -1,0 +1,131 @@
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="16dp"
+        android:background="@android:color/transparent">
+
+    <!-- CARD -->
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_menu"
+            android:padding="12dp"
+            android:elevation="8dp">
+
+        <!-- PERFIL -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="14dp"
+                android:gravity="center_vertical">
+
+            <!-- FOTO -->
+            <ImageView
+                    android:id="@+id/imgPerfil"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/ic_user"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/bg_circle"
+                    android:padding="2dp"/>
+
+            <!-- TEXTOS -->
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="12dp">
+
+                <!-- NOMBRE (2 líneas estilo Los Olivos) -->
+                <TextView
+                        android:id="@+id/txtNombreHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nombre"
+                        android:textStyle="bold"
+                        android:textSize="15sp"
+                        android:textColor="#3E8E7E"
+                        android:lineSpacingExtra="2dp"/>
+
+                <!-- CORREO -->
+                <TextView
+                        android:id="@+id/txtCorreoHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="correo@email.com"
+                        android:textColor="#7A7A7A"
+                        android:textSize="13sp"
+                        android:layout_marginTop="2dp"/>
+
+                <!-- BOTÓN EDITAR (más fino) -->
+                <Button
+                        android:id="@+id/btnEditarPerfil"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:text="Editar"
+                        android:textAllCaps="false"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/btn_morado"
+                        android:textColor="#FFFFFF"
+                        android:textSize="13sp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- MENÚ -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="6dp">
+
+            <TextView
+                    android:id="@+id/nav_plan"
+                    style="@style/menuItem"
+                    android:text="Tu Plan"/>
+            <View style="@style/divider"/>
+
+            <TextView
+                    android:id="@+id/nav_afiliados"
+                    style="@style/menuItem"
+                    android:text="Afiliados"/>
+            <View style="@style/divider"/>
+
+            <TextView
+                    android:id="@+id/nav_cartera"
+                    style="@style/menuItem"
+                    android:text="Cartera"/>
+            <View style="@style/divider"/>
+
+            <TextView
+                    android:id="@+id/nav_pagos"
+                    style="@style/menuItem"
+                    android:text="Pagos"/>
+            <View style="@style/divider"/>
+
+            <TextView
+                    android:id="@+id/nav_sedes"
+                    style="@style/menuItem"
+                    android:text="Sedes"/>
+            <View style="@style/divider"/>
+
+            <TextView
+                    android:id="@+id/nav_asesor"
+                    style="@style/menuItem"
+                    android:text="Asesor Virtual"/>
+            <View style="@style/divider"/>
+
+            <TextView
+                    android:id="@+id/nav_logout"
+                    style="@style/menuItem"
+                    android:text="Cerrar sesión"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

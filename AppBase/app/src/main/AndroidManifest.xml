@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
+
             android:usesCleartextTraffic="true"
             android:allowBackup="true"
             android:dataExtractionRules="@xml/data_extraction_rules"
@@ -25,21 +25,27 @@
             </intent-filter>
 
         </activity>
+        <activity android:name=".activitys.activityUsuarios.EditarPerfilActivity"/>
 
         <!-- Registro -->
         <activity android:name=".activitys.activityUsuarios.RegistroActivity"/>
 
-        <!-- MainActivity -->
+        <!-- Main -->
         <activity android:name=".activitys.MainActivity"/>
 
-        <!-- Pantalla contratos -->
-        <activity android:name=".activitys.activityContrato.ProductosActivity"/>
+        <!-- ✅ MAIN CLIENTE (CORREGIDO) -->
+        <activity android:name=".MainClienteActivity.MainClienteActivity"/>
 
-        <!-- CRUD contratos -->
+        <!-- Servicios -->
+        <activity android:name=".activitys.ServiciosActivity"/>
+
+        <!-- Contratos -->
+        <activity android:name=".activitys.activityContrato.ProductosActivity"/>
         <activity android:name=".activitys.activityContrato.BuscarContratoActivity"/>
         <activity android:name=".activitys.activityContrato.CrearContratoActivity"/>
         <activity android:name=".activitys.activityContrato.ActualizarContratoActivity"/>
         <activity android:name=".activitys.activityContrato.EliminarContratoActivity"/>
+
 
     </application>
 

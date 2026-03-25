@@ -1,73 +1,109 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/bg_login">
+                android:background="#F3EDF7">
 
-    <LinearLayout
-            android:orientation="vertical"
-            android:layout_centerInParent="true"
-            android:padding="30dp"
+    <!-- Fondo -->
+    <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="250dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/bg_wave"/>
 
-        <TextView
-                android:text="Login"
-                android:textColor="#FFFFFF"
-                android:textSize="40sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="40dp"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+    <!-- Card -->
 
-        <!-- Usuario -->
+    <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/logo"
+            android:scaleType="centerCrop"
+            app:shapeAppearanceOverlay="@style/CircleImage"/>
+    <androidx.cardview.widget.CardView
+            android:id="@+id/cardLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_centerInParent="true"
+            app:cardCornerRadius="25dp"
+            app:cardElevation="10dp">
 
-        <EditText
-                android:id="@+id/txtCorreo"
-                android:hint="Correo"
-                android:textColor="#000000"
-                android:textColorHint="#000000"
-                android:drawableStart="@android:drawable/ic_menu_myplaces"
-                android:padding="15dp"
-                android:background="@drawable/input_round"
-                android:layout_marginBottom="15dp"
+        <LinearLayout
+                android:orientation="vertical"
+                android:padding="25dp"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"/>
-        <!-- Password -->
+                android:layout_height="wrap_content">
 
-        <EditText
-                android:id="@+id/txtPassword"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:textColor="#000000"
-                android:textColorHint="#000000"
-                android:drawableStart="@android:drawable/ic_lock_lock"
-                android:padding="15dp"
-                android:background="@drawable/input_round"
-                android:layout_marginBottom="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"/>
+            <!-- Título -->
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bienvenido"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="#4A148C"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="20dp"/>
 
-        <TextView
-                android:id="@+id/btnIrRegistro"
-                android:text="Resgistrarse"
-                android:textColor="#FF66B2"
-                android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+            <!-- Correo -->
+            <EditText
+                    android:id="@+id/txtCorreo"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:hint="Correo"
+                    android:background="@drawable/input_morado"
+                    android:padding="15dp"
+                    android:layout_marginBottom="15dp"/>
 
-        <Button
-                android:id="@+id/btnLogin"
-                android:text=">"
-                android:textSize="26sp"
-                android:textColor="#FFFFFF"
-                android:background="@drawable/btn_circle"
-                android:layout_gravity="center"
-                android:layout_width="70dp"
-                android:layout_height="70dp"/>
+            <!-- Password -->
+            <EditText
+                    android:id="@+id/txtPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:hint="Contraseña"
+                    android:inputType="textPassword"
+                    android:drawableEnd="@android:drawable/ic_menu_view"
+                    android:background="@drawable/input_morado"
+                    android:padding="15dp"
+                    android:layout_marginBottom="20dp"/>
 
-    </LinearLayout>
+            <!-- 🔥 BOTÓN + LOADING -->
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginBottom="10dp">
+
+                <Button
+                        android:id="@+id/btnLogin"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Ingresar"
+                        android:textColor="#FFFFFF"
+                        android:background="@drawable/btn_morado"/>
+
+                <ProgressBar
+                        android:id="@+id/progressLogin"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:visibility="gone"/>
+            </FrameLayout>
+
+            <!-- Registro -->
+            <TextView
+                    android:id="@+id/btnIrRegistro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¿No tienes cuenta? Regístrate"
+                    android:textColor="#7B1FA2"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
 </RelativeLayout>

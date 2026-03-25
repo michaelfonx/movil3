@@ -1,0 +1,132 @@
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:background="#F5F5F5">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+        <!-- 🟣 PLAN -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card"
+                android:padding="16dp"
+                android:layout_marginBottom="12dp"
+                android:orientation="vertical"
+                android:elevation="4dp">
+
+            <TextView
+                    android:id="@+id/txtPlanNombre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Plan"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="#212121"/>
+
+            <TextView
+                    android:id="@+id/txtPrecio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$0"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#6A1B9A"
+                    android:layout_marginTop="4dp"/>
+
+            <TextView
+                    android:id="@+id/txtDescripcion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Descripción del plan"
+                    android:textSize="14sp"
+                    android:textColor="#757575"
+                    android:layout_marginTop="8dp"/>
+        </LinearLayout>
+
+        <!-- 🟢 SERVICIOS -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card"
+                android:padding="16dp"
+                android:layout_marginBottom="12dp"
+                android:orientation="vertical"
+                android:elevation="4dp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Servicios"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textColor="#212121"/>
+
+            <TextView
+                    android:id="@+id/txtServicios"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#424242"
+                    android:layout_marginTop="6dp"/>
+        </LinearLayout>
+
+        <!-- 🟡 PRODUCTOS -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card"
+                android:padding="16dp"
+                android:layout_marginBottom="12dp"
+                android:orientation="vertical"
+                android:elevation="4dp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Productos"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textColor="#212121"/>
+
+            <TextView
+                    android:id="@+id/txtProductos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#424242"
+                    android:layout_marginTop="6dp"/>
+        </LinearLayout>
+
+        <!-- 🔵 PAGOS -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card"
+                android:padding="16dp"
+                android:orientation="vertical"
+                android:elevation="4dp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pagos"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textColor="#212121"/>
+
+            <TextView
+                    android:id="@+id/txtPagos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#424242"
+                    android:layout_marginTop="6dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

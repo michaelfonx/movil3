@@ -1,0 +1,30 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- GRADIENTE BASE -->
+    <item>
+        <shape>
+            <gradient
+                    android:startColor="#6A5AE0"
+                    android:endColor="#8E7BFF"
+                    android:angle="90"/>
+        </shape>
+    </item>
+
+    <!-- CÍRCULO SUPERIOR IZQUIERDO (CONTROLADO) -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#30FFFFFF"/>
+        </shape>
+
+        <size
+                android:width="180dp"
+                android:height="180dp"/>
+
+        <gravity android:gravity="top|start"/>
+
+        <inset
+                android:left="-60dp"
+                android:top="-60dp"/>
+    </item>
+
+</layer-list>

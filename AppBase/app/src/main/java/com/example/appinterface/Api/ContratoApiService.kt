@@ -1,6 +1,7 @@
 package com.example.appinterface.Api
 
 import com.example.appinterface.model.Contrato
+import com.example.appinterface.model.MiPlanDTO
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -36,4 +37,9 @@ interface ContratoApiService {
     fun eliminarContrato(
         @Path("id") id: Int
     ): Call<String>
+
+    @GET("api/mi-plan/{clienteId}")
+    fun obtenerMiPlan(
+        @Path("clienteId") clienteId: Int
+    ): Call<MiPlanDTO>
 }

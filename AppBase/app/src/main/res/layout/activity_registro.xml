@@ -1,78 +1,137 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_registro">
+
+    <!-- SCROLL -->
+    <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
-    <LinearLayout
-            android:orientation="vertical"
-            android:padding="24dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        <TextView
-                android:text="Registro de Usuario"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        <EditText
-                android:id="@+id/txtPrimerNombre"
-                android:hint="Primer nombre"
+        <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="20dp"
+                android:orientation="vertical">
 
-        <EditText
-                android:id="@+id/txtSegundoNombre"
-                android:hint="Segundo nombre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+            <!-- CARD -->
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp"
+                    android:background="@drawable/card_white">
 
-        <EditText
-                android:id="@+id/txtPrimerApellido"
-                android:hint="Primer apellido"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                <!-- TEXTO -->
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Diligencia la siguiente información para crear una cuenta"
+                        android:textColor="#333"
+                        android:textSize="14sp"
+                        android:gravity="center"
+                        android:layout_marginBottom="16dp"/>
 
-        <EditText
-                android:id="@+id/txtSegundoApellido"
-                android:hint="Segundo apellido"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                <!-- INPUTS -->
+                <EditText
+                        android:id="@+id/txtPrimerNombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:hint="  PrimerNombre"
+                        android:background="@drawable/input_olivos"
+                        android:layout_marginTop="8dp"/>
+                <EditText
+                        android:id="@+id/txtSegundoNombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:hint="  SegundoNombre"
+                        android:background="@drawable/input_olivos"
+                        android:layout_marginTop="8dp"/>
+                <EditText
+                        android:id="@+id/txtPrimerApellido"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:hint="  PrimerApellido"
+                        android:background="@drawable/input_olivos"
+                        android:layout_marginTop="8dp"/>
+                <EditText
+                        android:id="@+id/txtSegundoApellido"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:hint="  SegundoApellido"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/input_olivos"/>
+                <EditText
+                        android:id="@+id/txtDocumento"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:hint="  Documento"
+                        android:background="@drawable/input_olivos"
+                        android:layout_marginTop="8dp"/>
 
-        <EditText
-                android:id="@+id/txtDocumento"
-                android:hint="Documento"
-                android:inputType="number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                <EditText
+                        android:id="@+id/txtDireccion"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:hint="  Dirección"
+                        android:background="@drawable/input_olivos"
+                        android:layout_marginTop="8dp"/>
 
-        <EditText
-                android:id="@+id/txtCorreo"
-                android:hint="Correo"
-                android:inputType="textEmailAddress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
 
-        <EditText
-                android:id="@+id/txtDireccion"
-                android:hint="Dirección"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                <EditText
+                        android:id="@+id/txtDocumento"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:hint="  Celular"
+                        android:background="@drawable/input_olivos"
+                        android:layout_marginTop="8dp"/>
 
-        <EditText
-                android:id="@+id/txtPassword"
-                android:hint="Contraseña"
-                android:inputType="textPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
 
-        <Button
-                android:id="@+id/btnRegistrar"
-                android:text="Registrar Usuario"
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                <EditText
+                        android:id="@+id/txtCorreo"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:hint="  Correo Electrónico"
+                        android:background="@drawable/input_olivos"
+                        android:layout_marginTop="8dp"/>
 
-    </LinearLayout>
-</ScrollView>
+
+
+                <EditText
+                        android:id="@+id/txtPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:hint="  Contraseña"
+                        android:inputType="textPassword"
+                        android:background="@drawable/input_olivos"
+                        android:layout_marginTop="8dp"/>
+
+                <!-- BOTÓN -->
+                <Button
+                        android:id="@+id/btnRegistrar"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:text="Crear Cuenta"
+                        android:textColor="#FFFFFF"
+                        android:background="@drawable/btn_morado"
+                        android:layout_marginTop="16dp"/>
+
+                <!-- CANCELAR -->
+                <TextView
+                        android:id="@+id/txtCancelar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cancelar"
+                        android:textColor="#9E9E9E"
+                        android:layout_marginTop="12dp"
+                        android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

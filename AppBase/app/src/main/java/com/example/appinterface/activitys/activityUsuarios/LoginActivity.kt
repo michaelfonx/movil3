@@ -1,16 +1,18 @@
 package com.example.appinterface.activitys.activityUsuarios
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.text.InputType
+import android.view.MotionEvent
+import android.view.View
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.appinterface.Api.RetrofitInstance
 import com.example.appinterface.R
-import com.example.appinterface.activitys.activityUsuarios.RegistroActivity
-import com.example.appinterface.activitys.activityContrato.ProductosActivity
+import com.example.appinterface.activitys.admin.AdminActivity
+import com.example.appinterface.activitys.asesor.AsesorActivity
+import com.example.appinterface.MainClienteActivity.MainClienteActivity
 import com.example.appinterface.model.LoginRequest
 import com.example.appinterface.model.LoginResponse
 import retrofit2.Call
@@ -19,6 +21,7 @@ import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -26,25 +29,51 @@ class LoginActivity : AppCompatActivity() {
 
         val txtCorreo = findViewById<EditText>(R.id.txtCorreo)
         val txtPassword = findViewById<EditText>(R.id.txtPassword)
-
         val btnLogin = findViewById<Button>(R.id.btnLogin)
+        val progress = findViewById<ProgressBar>(R.id.progressLogin)
         val btnRegistro = findViewById<TextView>(R.id.btnIrRegistro)
+        val card = findViewById<View>(R.id.cardLogin)
+
+        card.alpha = 0f
+        card.translationY = 100f
+        card.animate().alpha(1f).translationY(0f).setDuration(800).start()
+
+        var isPasswordVisible = false
+
+        txtPassword.setOnTouchListener { _, event ->
+            val DRAWABLE_END = 2
+
+            if (event.action == MotionEvent.ACTION_UP) {
+                if (event.rawX >= (txtPassword.right - txtPassword.compoundDrawables[DRAWABLE_END].bounds.width())) {
+
+                    isPasswordVisible = !isPasswordVisible
+
+                    if (isPasswordVisible) {
+                        txtPassword.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                    } else {
+                        txtPassword.inputType =
+                            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                    }
+
+                    txtPassword.setSelection(txtPassword.text.length)
+                    return@setOnTouchListener true
+                }
+            }
+            false
+        }
 
         btnLogin.setOnClickListener {
 
-            val correo = txtCorreo.text.toString()
-            val password = txtPassword.text.toString()
+            val correo = txtCorreo.text.toString().trim()
+            val password = txtPassword.text.toString().trim()
 
-            if(correo.isEmpty() || password.isEmpty()){
-
-                Toast.makeText(
-                    this,
-                    "Complete todos los campos",
-                    Toast.LENGTH_LONG
-                ).show()
-
+            if (correo.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "Complete todos los campos", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
+
+            progress.visibility = View.VISIBLE
+            btnLogin.isEnabled = false
 
             val login = LoginRequest(correo, password)
 
@@ -56,55 +85,64 @@ class LoginActivity : AppCompatActivity() {
                         response: Response<LoginResponse>
                     ) {
 
-                        if(response.isSuccessful){
+                        progress.visibility = View.GONE
+                        btnLogin.isEnabled = true
 
-                            val token = response.body()?.token
+                        if (response.isSuccessful && response.body() != null) {
 
-                            val sharedPref =
-                                getSharedPreferences("APP_PREFS", MODE_PRIVATE)
+                            val data = response.body()!!
+
+                            val sharedPref = getSharedPreferences("APP_PREFS", MODE_PRIVATE)
+
 
                             sharedPref.edit()
-                                .putString("TOKEN",token)
+                                .putString("TOKEN", data.token)
+                                .putString("ROL", data.rol)
+                                .putInt("ID", data.usuario_id ?: -1)
+
+
+                                .putString(
+                                    "NOMBRE",
+                                    "${data.usuario_primer_nombre} ${data.usuario_segundo_nombre}"
+                                )
+
+
+                                .putString(
+                                    "APELLIDO",
+                                    "${data.usuario_primer_apellido} ${data.usuario_segundo_apellido}"
+                                )
+
+
+                                .putString("CORREO", data.usuario_correo)
+
                                 .apply()
 
-                            Toast.makeText(
-                                this@LoginActivity,
-                                "Login correcto",
-                                Toast.LENGTH_LONG
-                            ).show()
-
-                            startActivity(
-                                Intent(this@LoginActivity, ProductosActivity::class.java)
-                            )
+                            when (data.rol) {
+                                "Cliente" -> startActivity(Intent(this@LoginActivity, MainClienteActivity::class.java))
+                                "Asesor" -> startActivity(Intent(this@LoginActivity, AsesorActivity::class.java))
+                                "Administrador" -> startActivity(Intent(this@LoginActivity, AdminActivity::class.java))
+                                else -> Toast.makeText(this@LoginActivity, "Rol no reconocido", Toast.LENGTH_LONG).show()
+                            }
 
                             finish()
 
-                        }else{
-
-                            Toast.makeText(
-                                this@LoginActivity,
-                                "Credenciales incorrectas",
-                                Toast.LENGTH_LONG
-                            ).show()
+                        } else {
+                            Toast.makeText(this@LoginActivity, "Credenciales incorrectas", Toast.LENGTH_LONG).show()
                         }
                     }
 
                     override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
 
-                        Toast.makeText(
-                            this@LoginActivity,
-                            "Error conexión",
-                            Toast.LENGTH_LONG
-                        ).show()
+                        progress.visibility = View.GONE
+                        btnLogin.isEnabled = true
+
+                        Toast.makeText(this@LoginActivity, "Error conexión", Toast.LENGTH_LONG).show()
                     }
                 })
         }
 
         btnRegistro.setOnClickListener {
-
-            startActivity(
-                Intent(this, RegistroActivity::class.java)
-            )
+            startActivity(Intent(this, RegistroActivity::class.java))
         }
     }
 }

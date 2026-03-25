@@ -10,6 +10,7 @@ data class Usuario(
     val usuario_documento: Int,
     val usuario_correo: String,
     val usuario_direccion: String,
-    val usuario_credencial: String
+    val usuario_credencial: String,
+    val rol_id: Int = 1
 
 )

@@ -24,13 +24,17 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val buttonGoToSecondActivity: Button = findViewById(R.id.buttonSegundaActividad)
+        val btnProductos: Button = findViewById(R.id.buttonSegundaActividad)
+        val btnServicios: Button = findViewById(R.id.buttonServicios)
 
-        buttonGoToSecondActivity.setOnClickListener {
-
+        btnProductos.setOnClickListener {
             val intent = Intent(this, ProductosActivity::class.java)
             startActivity(intent)
+        }
 
+        btnServicios.setOnClickListener {
+            val intent = Intent(this, ServiciosActivity::class.java)
+            startActivity(intent)
         }
     }
 }

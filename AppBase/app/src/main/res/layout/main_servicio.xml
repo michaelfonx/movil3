@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:padding="12dp"
+              android:orientation="vertical"
+              android:background="#F5F5F5"
+              android:layout_marginBottom="8dp">
+
+    <TextView
+            android:id="@+id/txtNombreServicio"
+            android:textStyle="bold"
+            android:textSize="16sp"/>
+
+    <TextView
+            android:id="@+id/txtDescripcion"/>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+        <Button
+                android:id="@+id/btnEditar"
+                android:text="✏️"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <Button
+                android:id="@+id/btnEliminar"
+                android:text="🗑️"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

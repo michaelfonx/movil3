@@ -1,0 +1,25 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- GRADIENTE -->
+    <item>
+        <shape>
+            <gradient
+                    android:startColor="#6A5AE0"
+                    android:endColor="#8E7BFF"
+                    android:angle="90"/>
+        </shape>
+    </item>
+
+    <!-- DECORACIÓN -->
+    <item android:drawable="@drawable/bg_decoracion"/>
+
+    <!-- CURVA BLANCA -->
+    <item>
+        <shape>
+            <solid android:color="#F5F5F5"/>
+            <corners android:topLeftRadius="120dp"/>
+        </shape>
+        <inset android:top="200dp"/>
+    </item>
+
+</layer-list>

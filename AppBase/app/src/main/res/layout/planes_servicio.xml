@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <TextView
+            android:id="@+id/txtTitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Planes Fúnebres"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp"/>
+
+    <TextView
+            android:id="@+id/txtInfoUsuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Info usuario"
+            app:layout_constraintTop_toBottomOf="@id/txtTitulo"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"/>
+
+    <!-- PLAN 1 -->
+    <TextView
+            android:id="@+id/plan1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Plan Básico:\n• Ataúd estándar\n• Servicio 12 horas\n• Transporte local"
+            android:padding="12dp"
+            android:background="#E0E0E0"
+            app:layout_constraintTop_toBottomOf="@id/txtInfoUsuario"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="20dp"/>
+
+    <!-- PLAN 2 -->
+    <TextView
+            android:id="@+id/plan2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Plan Intermedio:\n• Ataúd premium\n• Servicio 24 horas\n• Transporte nacional\n• Flores incluidas"
+            android:padding="12dp"
+            android:background="#D6D6D6"
+            app:layout_constraintTop_toBottomOf="@id/plan1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="10dp"/>
+
+    <!-- PLAN 3 -->
+    <TextView
+            android:id="@+id/plan3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Plan Premium:\n• Ataúd de lujo\n• Servicio 48 horas\n• Transporte internacional\n• Flores + Música\n• Trámites legales incluidos"
+            android:padding="12dp"
+            android:background="#C4C4C4"
+            app:layout_constraintTop_toBottomOf="@id/plan2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="10dp"/>
+
+    <Button
+            android:id="@+id/btnVolver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Volver"
+            android:onClick="volverpag"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="20dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

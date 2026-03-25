@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/nav_plan" android:title="Tu Plan"/>
+    <item android:id="@+id/nav_afiliados" android:title="Afiliados"/>
+    <item android:id="@+id/nav_cartera" android:title="Cartera"/>
+    <item android:id="@+id/nav_pagos" android:title="Pagos"/>
+    <item android:id="@+id/nav_sedes" android:title="Sedes"/>
+    <item android:id="@+id/nav_asesor" android:title="Asesor Virtual"/>
+    <item android:id="@+id/nav_logout" android:title="Cerrar sesión"/>
+
+</menu>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="16dp">
+
+    <EditText
+            android:id="@+id/inputId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ID Servicio"/>
+
+    <EditText
+            android:id="@+id/inputNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre"/>
+
+    <EditText
+            android:id="@+id/inputDescripcion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Descripción"/>
+
+    <EditText
+            android:id="@+id/inputPrecio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Precio"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerServicios"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+</LinearLayout>
