@@ -1,11 +1,14 @@
 package com.example.appinterface.activitys.activityUsuarios
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.appinterface.Api.RetrofitInstance
+import com.example.appinterface.MainClienteActivity.MainClienteActivity
 import com.example.appinterface.R
+import com.example.appinterface.model.LoginRequest
+import com.example.appinterface.model.LoginResponse
 import com.example.appinterface.model.Usuario
 import retrofit2.Call
 import retrofit2.Callback
@@ -18,7 +21,6 @@ class RegistroActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registro)
 
-
         val primerNombre = findViewById<EditText>(R.id.txtPrimerNombre)
         val segundoNombre = findViewById<EditText>(R.id.txtSegundoNombre)
         val primerApellido = findViewById<EditText>(R.id.txtPrimerApellido)
@@ -27,57 +29,34 @@ class RegistroActivity : AppCompatActivity() {
         val correo = findViewById<EditText>(R.id.txtCorreo)
         val direccion = findViewById<EditText>(R.id.txtDireccion)
         val password = findViewById<EditText>(R.id.txtPassword)
+        val fechaNacimiento = findViewById<EditText>(R.id.txtFechaNacimiento)
 
         val btnRegistrar = findViewById<Button>(R.id.btnRegistrar)
         val cancelar = findViewById<TextView>(R.id.txtCancelar)
 
-
         cancelar.setOnClickListener {
             finish()
-            overridePendingTransition(
-                R.anim.slide_in_right,
-                R.anim.slide_out_left
-            )
         }
-
 
         btnRegistrar.setOnClickListener {
 
             val correoText = correo.text.toString().trim()
             val passwordText = password.text.toString().trim()
 
-
             if (
                 primerNombre.text.isEmpty() ||
                 primerApellido.text.isEmpty() ||
                 documento.text.isEmpty() ||
                 correoText.isEmpty() ||
-                passwordText.isEmpty()
+                passwordText.isEmpty() ||
+                fechaNacimiento.text.isEmpty()
             ) {
                 Toast.makeText(this, "Complete todos los campos", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
 
-            if (!correoText.contains("@")) {
-                Toast.makeText(this, "Correo inválido", Toast.LENGTH_LONG).show()
-                return@setOnClickListener
-            }
-
-            if (passwordText.length < 6) {
-                Toast.makeText(this, "Contraseña mínimo 6 caracteres", Toast.LENGTH_LONG).show()
-                return@setOnClickListener
-            }
-
-            btnRegistrar.isEnabled = false
-
-            val documentoInt = try {
-                documento.text.toString().toInt()
-            } catch (e: Exception) {
-                Toast.makeText(this, "Documento inválido", Toast.LENGTH_LONG).show()
-                btnRegistrar.isEnabled = true
-                return@setOnClickListener
-            }
-
+            val documentoInt = documento.text.toString().toInt()
+            val fechaFormateada = fechaNacimiento.text.toString().replace("/", "-")
 
             val usuario = Usuario(
                 null,
@@ -88,69 +67,77 @@ class RegistroActivity : AppCompatActivity() {
                 documentoInt,
                 correoText,
                 direccion.text.toString(),
-                passwordText
+                passwordText,
+                fechaFormateada,
+                1
             )
 
+            btnRegistrar.isEnabled = false
 
             RetrofitInstance.usuarioApi.registrarUsuario(usuario)
                 .enqueue(object : Callback<Map<String, String>> {
 
-                    override fun onResponse(
-                        call: Call<Map<String, String>>,
-                        response: Response<Map<String, String>>
-                    ) {
-
-                        btnRegistrar.isEnabled = true
+                    override fun onResponse(call: Call<Map<String, String>>, response: Response<Map<String, String>>) {
 
                         if (response.isSuccessful) {
 
-                            val mensaje = response.body()?.get("mensaje")
-
-                            Log.d("API_OK", mensaje ?: "Registro exitoso")
-
                             Toast.makeText(
                                 this@RegistroActivity,
-                                mensaje ?: "Usuario creado correctamente",
-                                Toast.LENGTH_LONG
+                                "Usuario creado correctamente",
+                                Toast.LENGTH_SHORT
                             ).show()
 
-
-                            finish()
-                            overridePendingTransition(
-                                R.anim.slide_in_right,
-                                R.anim.slide_out_left
-                            )
+                            loginAutomatico(correoText, passwordText)
 
                         } else {
-
-                            val error = response.errorBody()?.string()
-
-                            Log.e("API_ERROR", error ?: "Error desconocido")
-
-                            Toast.makeText(
-                                this@RegistroActivity,
-                                "Error: ${error ?: "Error desconocido"}",
-                                Toast.LENGTH_LONG
-                            ).show()
+                            btnRegistrar.isEnabled = true
+                            Toast.makeText(this@RegistroActivity, "Error al registrar", Toast.LENGTH_LONG).show()
                         }
                     }
 
-                    override fun onFailure(
-                        call: Call<Map<String, String>>,
-                        t: Throwable
-                    ) {
-
+                    override fun onFailure(call: Call<Map<String, String>>, t: Throwable) {
                         btnRegistrar.isEnabled = true
-
-                        Log.e("API_ERROR", t.message ?: "Error conexión")
-
-                        Toast.makeText(
-                            this@RegistroActivity,
-                            "Error conexión: ${t.message}",
-                            Toast.LENGTH_LONG
-                        ).show()
+                        Toast.makeText(this@RegistroActivity, "Error conexión", Toast.LENGTH_LONG).show()
                     }
                 })
         }
+    }
+
+    private fun loginAutomatico(correo: String, password: String) {
+
+        val login = LoginRequest(correo, password)
+
+        RetrofitInstance.usuarioApi.login(login)
+            .enqueue(object : Callback<LoginResponse> {
+
+                override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+
+                    if (response.isSuccessful && response.body() != null) {
+
+                        val data = response.body()!!
+
+                        val prefs = getSharedPreferences("APP_PREFS", MODE_PRIVATE)
+
+                        prefs.edit()
+                            .putString("TOKEN", data.token)
+                            .putString("ROL", data.rol)
+                            .putInt("ID", data.usuario_id ?: 0)
+                            .putString("NOMBRE", data.usuario_primer_nombre)
+                            .putString("APELLIDO", data.usuario_primer_apellido)
+                            .putString("CORREO", data.usuario_correo)
+                            .apply()
+
+                        startActivity(Intent(this@RegistroActivity, MainClienteActivity::class.java))
+                        finish()
+
+                    } else {
+                        Toast.makeText(this@RegistroActivity, "Error login automático", Toast.LENGTH_LONG).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                    Toast.makeText(this@RegistroActivity, "Error conexión", Toast.LENGTH_LONG).show()
+                }
+            })
     }
 }

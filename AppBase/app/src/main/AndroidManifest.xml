@@ -14,7 +14,7 @@
             android:theme="@style/Theme.AppInterface"
             tools:targetApi="31">
 
-        <!-- LOGIN (pantalla inicial) -->
+
         <activity
                 android:name=".activitys.activityUsuarios.LoginActivity"
                 android:exported="true">
@@ -27,24 +27,24 @@
         </activity>
         <activity android:name=".activitys.activityUsuarios.EditarPerfilActivity"/>
 
-        <!-- Registro -->
+
         <activity android:name=".activitys.activityUsuarios.RegistroActivity"/>
 
-        <!-- Main -->
+
         <activity android:name=".activitys.MainActivity"/>
 
-        <!-- ✅ MAIN CLIENTE (CORREGIDO) -->
+
         <activity android:name=".MainClienteActivity.MainClienteActivity"/>
 
-        <!-- Servicios -->
         <activity android:name=".activitys.ServiciosActivity"/>
 
-        <!-- Contratos -->
+
         <activity android:name=".activitys.activityContrato.ProductosActivity"/>
         <activity android:name=".activitys.activityContrato.BuscarContratoActivity"/>
         <activity android:name=".activitys.activityContrato.CrearContratoActivity"/>
         <activity android:name=".activitys.activityContrato.ActualizarContratoActivity"/>
         <activity android:name=".activitys.activityContrato.EliminarContratoActivity"/>
+        <activity android:name=".activities.DetallePlanActivity"/>
 
 
     </application>

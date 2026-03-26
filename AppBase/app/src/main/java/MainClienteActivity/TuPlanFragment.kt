@@ -47,25 +47,30 @@ class TuPlanFragment : Fragment(R.layout.fragment_tu_plan) {
                         return
                     }
 
-                    // 🟣 PLAN
+
                     view.findViewById<TextView>(R.id.txtPlanNombre).text =
                         data.plan_nombre
 
                     view.findViewById<TextView>(R.id.txtPrecio).text =
                         "$${data.plan_precio}"
 
-                    // 🟢 SERVICIOS
-                    view.findViewById<TextView>(R.id.txtServicios).text =
-                        data.servicios.joinToString("\n") { "• $it" }
+                    // 🔥 DESCRIPCIÓN (NUEVO)
+                    view.findViewById<TextView>(R.id.txtDescripcion).text =
+                        data.plan_descripcion ?: "Sin descripción"
 
-                    // 🟡 PRODUCTOS
+
+                    view.findViewById<TextView>(R.id.txtServicios).text =
+                        if (data.servicios.isNullOrEmpty()) "Sin servicios"
+                        else data.servicios.joinToString("\n") { "• $it" }
+
+
                     view.findViewById<TextView>(R.id.txtProductos).text =
-                        if (data.productos.isEmpty()) "Sin productos"
+                        if (data.productos.isNullOrEmpty()) "Sin productos"
                         else data.productos.joinToString("\n") { "• $it" }
 
-                    // 🔵 PAGOS
+
                     view.findViewById<TextView>(R.id.txtPagos).text =
-                        if (data.pagos.isEmpty()) "Sin pagos"
+                        if (data.pagos.isNullOrEmpty()) "Sin pagos"
                         else data.pagos.joinToString("\n") {
                             "• ${it.metodo} - ${it.fecha}"
                         }
@@ -82,6 +87,10 @@ class TuPlanFragment : Fragment(R.layout.fragment_tu_plan) {
             "No tienes plan activo"
 
         view.findViewById<TextView>(R.id.txtPrecio).text = ""
+
+        view.findViewById<TextView>(R.id.txtDescripcion).text =
+            "Adquiere un plan para ver más información"
+
         view.findViewById<TextView>(R.id.txtServicios).text = ""
         view.findViewById<TextView>(R.id.txtProductos).text = ""
         view.findViewById<TextView>(R.id.txtPagos).text = ""

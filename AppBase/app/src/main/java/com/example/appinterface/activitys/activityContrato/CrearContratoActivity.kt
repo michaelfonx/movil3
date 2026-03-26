@@ -32,9 +32,9 @@ class CrearContratoActivity : AppCompatActivity() {
             )
 
             RetrofitInstance.api.crearContrato(contrato)
-                .enqueue(object : Callback<String> {
+                .enqueue(object : Callback<Int> {
 
-                    override fun onResponse(call: Call<String>, response: Response<String>) {
+                    override fun onResponse(call: Call<Int>, response: Response<Int>) {
 
                         Toast.makeText(
                             this@CrearContratoActivity,
@@ -43,7 +43,7 @@ class CrearContratoActivity : AppCompatActivity() {
                         ).show()
                     }
 
-                    override fun onFailure(call: Call<String>, t: Throwable) {}
+                    override fun onFailure(call: Call<Int>, t: Throwable) {}
                 })
         }
 

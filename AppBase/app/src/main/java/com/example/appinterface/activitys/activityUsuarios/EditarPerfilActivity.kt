@@ -25,7 +25,7 @@ class EditarPerfilActivity : AppCompatActivity() {
         api = RetrofitInstance.usuarioApi
 
         val prefs = getSharedPreferences("APP_PREFS", MODE_PRIVATE)
-        val userId = prefs.getInt("USER_ID", -1)
+        val userId = prefs.getInt("ID", 0)
 
         val edtNombre = findViewById<EditText>(R.id.edtNombre)
         val edtSegundoNombre = findViewById<EditText>(R.id.edtSegundoNombre)
@@ -39,7 +39,12 @@ class EditarPerfilActivity : AppCompatActivity() {
         val btnActualizar = findViewById<Button>(R.id.btnActualizar)
         val btnEliminar = findViewById<TextView>(R.id.btnEliminar)
 
-        // 🔥 CARGAR DATOS
+        if (userId == 0) {
+            Toast.makeText(this, "Error usuario", Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
+
         api.obtenerUsuario(userId).enqueue(object : Callback<Usuario> {
             override fun onResponse(call: Call<Usuario>, response: Response<Usuario>) {
                 val user = response.body()
@@ -61,7 +66,6 @@ class EditarPerfilActivity : AppCompatActivity() {
             }
         })
 
-        // 🔥 ACTUALIZAR
         btnActualizar.setOnClickListener {
 
             val old = currentUsuario ?: return@setOnClickListener
@@ -75,7 +79,8 @@ class EditarPerfilActivity : AppCompatActivity() {
                 usuario_documento = if (edtDocumento.text.isEmpty()) old.usuario_documento else edtDocumento.text.toString().toInt(),
                 usuario_correo = if (edtCorreo.text.isEmpty()) old.usuario_correo else edtCorreo.text.toString(),
                 usuario_direccion = if (edtDireccion.text.isEmpty()) old.usuario_direccion else edtDireccion.text.toString(),
-                usuario_credencial = if (edtPassword.text.isEmpty()) "" else edtPassword.text.toString()
+                usuario_credencial = old.usuario_credencial,
+                fecha_nacimiento = old.fecha_nacimiento
             )
 
             api.actualizarUsuario(userId, usuario)
@@ -85,25 +90,30 @@ class EditarPerfilActivity : AppCompatActivity() {
                         call: Call<Map<String, String>>,
                         response: Response<Map<String, String>>
                     ) {
-                        Toast.makeText(this@EditarPerfilActivity, "Actualizado correctamente", Toast.LENGTH_SHORT).show()
+                        if (response.isSuccessful) {
 
-                        prefs.edit()
-                            .putString("NOMBRE", usuario.usuario_primer_nombre)
-                            .putString("APELLIDO", usuario.usuario_primer_apellido)
-                            .putString("CORREO", usuario.usuario_correo)
-                            .apply()
+                            Toast.makeText(this@EditarPerfilActivity, "Actualizado correctamente", Toast.LENGTH_SHORT).show()
 
-                        setResult(RESULT_OK) // 🔥 CLAVE
-                        finish()
+                            prefs.edit()
+                                .putString("NOMBRE", usuario.usuario_primer_nombre)
+                                .putString("APELLIDO", usuario.usuario_primer_apellido)
+                                .putString("CORREO", usuario.usuario_correo)
+                                .apply()
+
+                            setResult(RESULT_OK)
+                            finish()
+
+                        } else {
+                            Toast.makeText(this@EditarPerfilActivity, "No se actualizó", Toast.LENGTH_SHORT).show()
+                        }
                     }
 
                     override fun onFailure(call: Call<Map<String, String>>, t: Throwable) {
-                        Toast.makeText(this@EditarPerfilActivity, "Error", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@EditarPerfilActivity, "Error conexión", Toast.LENGTH_SHORT).show()
                     }
                 })
         }
 
-        // 🔥 ELIMINAR
         btnEliminar.setOnClickListener {
 
             AlertDialog.Builder(this)
@@ -118,16 +128,23 @@ class EditarPerfilActivity : AppCompatActivity() {
                                 call: Call<Map<String, String>>,
                                 response: Response<Map<String, String>>
                             ) {
-                                Toast.makeText(this@EditarPerfilActivity, "Cuenta eliminada", Toast.LENGTH_SHORT).show()
 
-                                prefs.edit().clear().apply()
+                                if (response.isSuccessful) {
 
-                                startActivity(Intent(this@EditarPerfilActivity, LoginActivity::class.java))
-                                finish()
+                                    Toast.makeText(this@EditarPerfilActivity, "Cuenta eliminada", Toast.LENGTH_SHORT).show()
+
+                                    prefs.edit().clear().apply()
+
+                                    startActivity(Intent(this@EditarPerfilActivity, LoginActivity::class.java))
+                                    finish()
+
+                                } else {
+                                    Toast.makeText(this@EditarPerfilActivity, "No se eliminó", Toast.LENGTH_SHORT).show()
+                                }
                             }
 
                             override fun onFailure(call: Call<Map<String, String>>, t: Throwable) {
-                                Toast.makeText(this@EditarPerfilActivity, "Error", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this@EditarPerfilActivity, "Error conexión", Toast.LENGTH_SHORT).show()
                             }
                         })
                 }

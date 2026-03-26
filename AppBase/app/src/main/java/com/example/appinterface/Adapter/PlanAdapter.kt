@@ -1,13 +1,14 @@
 package com.example.appinterface.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appinterface.R
+import com.example.appinterface.activities.DetallePlanActivity
 import com.example.appinterface.model.Plan
 
 class PlanAdapter(
@@ -33,14 +34,10 @@ class PlanAdapter(
 
         val plan = lista[position]
 
-        // 🔥 TEXTO
         holder.nombre.text = plan.plan_nombre
         holder.precio.text = "$${plan.plan_precio} al mes"
-
-        // 🔥 BADGE
         holder.badge.text = "$${plan.plan_precio}"
 
-        // 🔥 IMÁGENES ROTATIVAS
         val imagenes = listOf(
             R.drawable.plan1,
             R.drawable.plan2,
@@ -51,13 +48,19 @@ class PlanAdapter(
             imagenes[position % imagenes.size]
         )
 
-        // 🔥 CLICK
+
         holder.itemView.setOnClickListener {
-            Toast.makeText(
-                holder.itemView.context,
-                plan.plan_nombre,
-                Toast.LENGTH_SHORT
-            ).show()
+
+            val context = holder.itemView.context
+
+            val intent = Intent(context, DetallePlanActivity::class.java)
+
+            intent.putExtra("PLAN_ID", plan.plan_id ?: 0)
+            intent.putExtra("PLAN_NOMBRE", plan.plan_nombre)
+            intent.putExtra("PLAN_PRECIO", plan.plan_precio)
+            intent.putExtra("PLAN_DESC", plan.plan_descripcion ?: "Sin descripción")
+
+            context.startActivity(intent)
         }
     }
 }

@@ -64,6 +64,13 @@
                         android:layout_marginTop="8dp"
                         android:background="@drawable/input_olivos"/>
                 <EditText
+                        android:id="@+id/txtFechaNacimiento"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:hint="Fecha nacimiento (YYYY-MM-DD)"
+                        android:background="@drawable/input_olivos"
+                        android:layout_marginTop="8dp"/>
+                <EditText
                         android:id="@+id/txtDocumento"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"

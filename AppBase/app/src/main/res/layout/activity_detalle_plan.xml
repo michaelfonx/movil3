@@ -1,0 +1,42 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:padding="20dp"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <!-- NOMBRE -->
+    <TextView
+            android:id="@+id/txtNombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Plan"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    <!-- PRECIO -->
+    <TextView
+            android:id="@+id/txtPrecio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$0"
+            android:textSize="18sp"
+            android:textColor="#6A1B9A"
+            android:layout_marginTop="8dp" />
+
+    <!-- DESCRIPCIÓN -->
+    <TextView
+            android:id="@+id/txtDescripcion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Descripción del plan"
+            android:layout_marginTop="12dp" />
+
+    <!-- BOTÓN -->
+    <Button
+            android:id="@+id/btnAdquirir"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Adquirir plan"
+            android:layout_marginTop="20dp" />
+
+</LinearLayout>

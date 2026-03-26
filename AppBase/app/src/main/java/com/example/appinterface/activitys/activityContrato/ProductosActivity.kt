@@ -55,7 +55,7 @@ class ProductosActivity : AppCompatActivity() {
 
     private fun cargarContratos() {
 
-        RetrofitInstance.api.obtenerCronogramas()
+        RetrofitInstance.api.obtenerContratos()
             .enqueue(object : Callback<List<Contrato>> {
 
                 override fun onResponse(

@@ -94,27 +94,13 @@ class LoginActivity : AppCompatActivity() {
 
                             val sharedPref = getSharedPreferences("APP_PREFS", MODE_PRIVATE)
 
-
                             sharedPref.edit()
                                 .putString("TOKEN", data.token)
                                 .putString("ROL", data.rol)
                                 .putInt("ID", data.usuario_id ?: -1)
-
-
-                                .putString(
-                                    "NOMBRE",
-                                    "${data.usuario_primer_nombre} ${data.usuario_segundo_nombre}"
-                                )
-
-
-                                .putString(
-                                    "APELLIDO",
-                                    "${data.usuario_primer_apellido} ${data.usuario_segundo_apellido}"
-                                )
-
-
+                                .putString("NOMBRE", data.usuario_primer_nombre)
+                                .putString("APELLIDO", data.usuario_primer_apellido)
                                 .putString("CORREO", data.usuario_correo)
-
                                 .apply()
 
                             when (data.rol) {
