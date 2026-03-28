@@ -20,7 +20,7 @@ class ServicioAdapter(
         val nombre: TextView = view.findViewById(R.id.nombreServicio)
         val precio: TextView = view.findViewById(R.id.precioServicio)
 
-        // 🔥 NUEVO
+
         val btnEditar: Button = view.findViewById(R.id.btnEditar)
         val btnEliminar: Button = view.findViewById(R.id.btnEliminar)
     }
@@ -40,7 +40,7 @@ class ServicioAdapter(
         holder.nombre.text = servicio.servicioNombre
         holder.precio.text = "Precio: ${servicio.servicioPrecio}"
 
-        // 🔥 ACCIONES
+
         holder.btnEditar.setOnClickListener {
             onEditar(servicio)
         }

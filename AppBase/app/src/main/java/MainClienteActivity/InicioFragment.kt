@@ -34,7 +34,7 @@ class InicioFragment : Fragment(R.layout.activity_cliente) {
             (activity as MainClienteActivity).abrirMenu()
         }
 
-        // 🔥 CARGAR DATOS
+
         actualizarBienvenido()
 
         val recycler = view.findViewById<RecyclerView>(R.id.recyclerPlanes)
@@ -56,7 +56,7 @@ class InicioFragment : Fragment(R.layout.activity_cliente) {
         })
     }
 
-    // 🔥 ACTUALIZAR BIENVENIDO (FORMA CORRECTA)
+
     fun actualizarBienvenido() {
 
         val prefs = requireActivity()
@@ -65,10 +65,10 @@ class InicioFragment : Fragment(R.layout.activity_cliente) {
         val nombre = prefs.getString("NOMBRE", "") ?: ""
         val apellido = prefs.getString("APELLIDO", "") ?: ""
 
-        // SOLO TEXTO FIJO
+
         txtBienvenido.text = "Bienvenido"
 
-        // NOMBRE DINÁMICO
+
         txtNombre.text = "${nombre} ${apellido}"
     }
 }

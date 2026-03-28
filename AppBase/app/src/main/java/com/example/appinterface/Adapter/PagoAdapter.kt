@@ -24,8 +24,8 @@ class PagoAdapter(private val lista: List<Pago>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val pago = lista[position]
-        holder.txtMetodo.text = "💳 ${pago.pago_metodo}"
-        holder.txtFecha.text = "📅 ${pago.pago_fecha}"
+        holder.txtMetodo.text = " ${pago.pago_metodo}"
+        holder.txtFecha.text = " ${pago.pago_fecha}"
     }
 
     override fun getItemCount() = lista.size

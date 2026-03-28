@@ -6,28 +6,27 @@ import retrofit2.http.*
 
 interface ApiServicioService {
 
-    // 🔹 GET TODOS
+
     @GET("servicio")
     fun obtenerServicios(): Call<List<Servicio>>
 
-    // 🔹 GET SERVICIOS POR CLIENTE 🔥 NUEVO
+
     @GET("servicio/cliente/{id}/servicios")
     fun obtenerServiciosCliente(
         @Path("id") id: Int
     ): Call<List<Servicio>>
 
-    // 🔹 POST
+
     @POST("servicio")
     fun crearServicio(@Body servicio: Servicio): Call<Servicio>
 
-    // 🔹 PUT
     @PUT("servicio/{id}")
     fun actualizarServicio(
         @Path("id") id: Int,
         @Body servicio: Servicio
     ): Call<Servicio>
 
-    // 🔹 DELETE
+
     @DELETE("servicio/{id}")
     fun eliminarServicio(
         @Path("id") id: Int

@@ -22,7 +22,10 @@ class TuPlanFragment : Fragment(R.layout.fragment_tu_plan) {
 
         val clienteId = prefs.getInt("ID", 0)
 
-        if (clienteId == 0) {
+        println(" ID REAL DESDE ANDROID: $clienteId")
+
+        if (clienteId <= 0) {
+            println("ID inválido, no se consulta API")
             mostrarSinPlan(view)
             return
         }
@@ -34,40 +37,39 @@ class TuPlanFragment : Fragment(R.layout.fragment_tu_plan) {
                     call: Call<MiPlanDTO>,
                     response: Response<MiPlanDTO>
                 ) {
+                    println("RESPONSE CODE: ${response.code()}")
 
                     if (!response.isSuccessful) {
+                        println("ERROR BACKEND: ${response.code()}")
                         mostrarSinPlan(view)
                         return
                     }
+
 
                     val data = response.body()
 
                     if (data == null) {
+                        println("DATA NULL")
                         mostrarSinPlan(view)
                         return
                     }
 
-
                     view.findViewById<TextView>(R.id.txtPlanNombre).text =
-                        data.plan_nombre
+                        data.plan_nombre ?: "Sin nombre"
 
                     view.findViewById<TextView>(R.id.txtPrecio).text =
-                        "$${data.plan_precio}"
+                        data.plan_precio?.let { "$$it" } ?: ""
 
-                    // 🔥 DESCRIPCIÓN (NUEVO)
                     view.findViewById<TextView>(R.id.txtDescripcion).text =
                         data.plan_descripcion ?: "Sin descripción"
-
 
                     view.findViewById<TextView>(R.id.txtServicios).text =
                         if (data.servicios.isNullOrEmpty()) "Sin servicios"
                         else data.servicios.joinToString("\n") { "• $it" }
 
-
                     view.findViewById<TextView>(R.id.txtProductos).text =
                         if (data.productos.isNullOrEmpty()) "Sin productos"
                         else data.productos.joinToString("\n") { "• $it" }
-
 
                     view.findViewById<TextView>(R.id.txtPagos).text =
                         if (data.pagos.isNullOrEmpty()) "Sin pagos"
@@ -77,9 +79,17 @@ class TuPlanFragment : Fragment(R.layout.fragment_tu_plan) {
                 }
 
                 override fun onFailure(call: Call<MiPlanDTO>, t: Throwable) {
+                    t.printStackTrace()
+                    println("ERROR REAL: ${t.message}")
                     mostrarSinPlan(view)
                 }
+
+
+
+
             })
+
+
     }
 
     private fun mostrarSinPlan(view: View) {
@@ -94,5 +104,9 @@ class TuPlanFragment : Fragment(R.layout.fragment_tu_plan) {
         view.findViewById<TextView>(R.id.txtServicios).text = ""
         view.findViewById<TextView>(R.id.txtProductos).text = ""
         view.findViewById<TextView>(R.id.txtPagos).text = ""
+    }
+    override fun onResume() {
+        super.onResume()
+        view?.let { onViewCreated(it, null) }
     }
 }

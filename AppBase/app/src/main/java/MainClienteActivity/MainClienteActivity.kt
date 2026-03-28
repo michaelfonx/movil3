@@ -101,7 +101,7 @@ class MainClienteActivity : AppCompatActivity() {
             editarPerfilLauncher.launch(intent)
         }
 
-        // 🔥 MENÚ CORREGIDO (AQUÍ ESTÁ LA SOLUCIÓN)
+
         val btnPlan = header.findViewById<TextView>(R.id.nav_plan)
         val btnAfiliados = header.findViewById<TextView>(R.id.nav_afiliados)
         val btnCartera = header.findViewById<TextView>(R.id.nav_cartera)

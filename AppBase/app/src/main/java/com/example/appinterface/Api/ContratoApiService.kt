@@ -31,7 +31,7 @@ interface ContratoApiService {
         @Body contratoPlan: ContratoPlan
     ): Call<String>
 
-    @GET("api/mi-plan/{clienteId}")
+    @GET("api/contrato-plan/mi-plan/{clienteId}")
     fun obtenerMiPlan(
         @Path("clienteId") clienteId: Int
     ): Call<MiPlanDTO>

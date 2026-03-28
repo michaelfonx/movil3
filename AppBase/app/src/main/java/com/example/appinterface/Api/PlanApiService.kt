@@ -6,11 +6,11 @@ import retrofit2.http.*
 
 interface PlanApiService {
 
-    // 🔥 GET (EL QUE USAS)
+
     @GET("api/planes")
     fun obtenerPlanes(): Call<List<Plan>>
 
-    // 🔽 LOS DEMÁS (NO LOS USAS AHORA, pero quedan listos)
+
 
     @GET("api/planes/{id}")
     fun obtenerPlan(@Path("id") id: Int): Call<Plan>

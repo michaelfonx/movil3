@@ -18,14 +18,14 @@ interface UsuarioApiService {
         @Body login: LoginRequest
     ): Call<LoginResponse>
 
-    // 🔥 ACTUALIZAR USUARIO
+
     @PUT("api/usuarios/{id}")
     fun actualizarUsuario(
         @Path("id") id: Int,
         @Body usuario: Usuario
     ): Call<Map<String, String>>
 
-    // 🔥 ELIMINAR USUARIO
+
     @DELETE("api/usuarios/{id}")
     fun eliminarUsuario(
         @Path("id") id: Int

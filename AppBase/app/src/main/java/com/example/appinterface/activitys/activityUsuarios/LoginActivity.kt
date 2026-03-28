@@ -94,14 +94,25 @@ class LoginActivity : AppCompatActivity() {
 
                             val sharedPref = getSharedPreferences("APP_PREFS", MODE_PRIVATE)
 
+                            val clienteId = data.cliente_id ?: 0
+
+                            println(" CLIENTE_ID GUARDADO: $clienteId")
+
                             sharedPref.edit()
                                 .putString("TOKEN", data.token)
                                 .putString("ROL", data.rol)
-                                .putInt("ID", data.usuario_id ?: -1)
+                                .putInt("ID", clienteId)
                                 .putString("NOMBRE", data.usuario_primer_nombre)
                                 .putString("APELLIDO", data.usuario_primer_apellido)
                                 .putString("CORREO", data.usuario_correo)
                                 .apply()
+
+                            if (clienteId == 0) {
+                                Toast.makeText(this@LoginActivity,
+                                    "Error: cliente_id no válido",
+                                    Toast.LENGTH_LONG).show()
+                                return
+                            }
 
                             when (data.rol) {
                                 "Cliente" -> startActivity(Intent(this@LoginActivity, MainClienteActivity::class.java))

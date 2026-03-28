@@ -31,7 +31,6 @@ class EventoAdapter(private val lista: List<Evento>) :
         holder.titulo.text = item.titulo
         holder.descripcion.text = item.descripcion
 
-        // 🎨 COLORES POR TIPO
         when (item.titulo) {
 
             "Contrato creado" -> holder.titulo.setTextColor(Color.parseColor("#2E7D32")) // verde

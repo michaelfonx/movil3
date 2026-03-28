@@ -10,6 +10,7 @@ import com.example.appinterface.R
 import com.example.appinterface.Api.RetrofitInstance
 import com.example.appinterface.model.Contrato
 import com.example.appinterface.model.ContratoPlan
+import com.example.appinterface.model.MiPlanDTO
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,8 +38,35 @@ class DetallePlanActivity : AppCompatActivity() {
         val btnAdquirir = findViewById<Button>(R.id.btnAdquirir)
 
         btnAdquirir.setOnClickListener {
-            crearContrato()
+            validarSiYaTienePlan()
         }
+    }
+
+    private fun validarSiYaTienePlan() {
+
+        val prefs = getSharedPreferences("APP_PREFS", Context.MODE_PRIVATE)
+        val clienteId = prefs.getInt("ID", 0)
+
+        RetrofitInstance.api.obtenerMiPlan(clienteId)
+            .enqueue(object : Callback<MiPlanDTO> {
+
+                override fun onResponse(call: Call<MiPlanDTO>, response: Response<MiPlanDTO>) {
+
+                    if (response.isSuccessful && response.body() != null) {
+                        Toast.makeText(
+                            this@DetallePlanActivity,
+                            "Ya tienes un plan adquirido",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    } else {
+                        crearContrato()
+                    }
+                }
+
+                override fun onFailure(call: Call<MiPlanDTO>, t: Throwable) {
+                    crearContrato()
+                }
+            })
     }
 
     private fun crearContrato() {

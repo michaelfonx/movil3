@@ -1,6 +1,6 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Cuando se presiona -->
+
     <item android:state_pressed="true">
         <shape>
             <solid android:color="#5E35B1"/>
@@ -8,7 +8,7 @@
         </shape>
     </item>
 
-    <!-- Normal -->
+
     <item>
         <shape>
             <gradient
