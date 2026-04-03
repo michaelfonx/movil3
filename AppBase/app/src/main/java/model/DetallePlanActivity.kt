@@ -8,9 +8,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.appinterface.R
 import com.example.appinterface.Api.RetrofitInstance
-import com.example.appinterface.model.Contrato
-import com.example.appinterface.model.ContratoPlan
 import com.example.appinterface.model.MiPlanDTO
+import example.appinterface.model.AdquirirPlanRequest
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,6 +37,7 @@ class DetallePlanActivity : AppCompatActivity() {
         val btnAdquirir = findViewById<Button>(R.id.btnAdquirir)
 
         btnAdquirir.setOnClickListener {
+            println("🔥 CLICK BOTÓN ADQUIRIR")
             validarSiYaTienePlan()
         }
     }
@@ -47,85 +47,74 @@ class DetallePlanActivity : AppCompatActivity() {
         val prefs = getSharedPreferences("APP_PREFS", Context.MODE_PRIVATE)
         val clienteId = prefs.getInt("ID", 0)
 
+        println("🔥 CLIENTE ID: $clienteId")
+
+        if (clienteId <= 0) {
+            Toast.makeText(this, "Usuario no identificado", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         RetrofitInstance.api.obtenerMiPlan(clienteId)
             .enqueue(object : Callback<MiPlanDTO> {
 
                 override fun onResponse(call: Call<MiPlanDTO>, response: Response<MiPlanDTO>) {
 
-                    if (response.isSuccessful && response.body() != null) {
+                    println("🔥 VALIDAR RESPONSE: ${response.code()}")
+
+                    val data = response.body()
+
+                    if (response.isSuccessful && data != null && (data.contrato_id ?: 0) > 0) {
                         Toast.makeText(
                             this@DetallePlanActivity,
                             "Ya tienes un plan adquirido",
                             Toast.LENGTH_LONG
                         ).show()
                     } else {
-                        crearContrato()
+                        println("🔥 NO TIENE PLAN → VA A ADQUIRIR")
+                        adquirirPlan()
                     }
                 }
 
                 override fun onFailure(call: Call<MiPlanDTO>, t: Throwable) {
-                    crearContrato()
+                    println("🔥 ERROR VALIDAR: ${t.message}")
+                    adquirirPlan()
                 }
             })
     }
 
-    private fun crearContrato() {
+    private fun adquirirPlan() {
 
         val prefs = getSharedPreferences("APP_PREFS", Context.MODE_PRIVATE)
         val clienteId = prefs.getInt("ID", 0)
 
-        if (clienteId == 0) {
-            Toast.makeText(this, "Usuario no identificado", Toast.LENGTH_SHORT).show()
+        println("🔥 ENVIANDO A BACKEND clienteId=$clienteId planId=$planId")
+
+        if (clienteId <= 0) {
+            Toast.makeText(this, "ID inválido", Toast.LENGTH_SHORT).show()
             return
         }
 
-        val contrato = Contrato(
-            contrato_estado = true,
-            contrato_valor = planPrecio,
-            cliente_id = clienteId
+        val body = AdquirirPlanRequest(
+            cliente_id = clienteId,
+            plan_id = planId,
+            valor = planPrecio
         )
 
-        RetrofitInstance.api.crearContrato(contrato)
+        println("🔥 BODY: $body")
+
+        RetrofitInstance.api.adquirirPlan(body)
             .enqueue(object : Callback<Int> {
 
                 override fun onResponse(call: Call<Int>, response: Response<Int>) {
 
-                    if (!response.isSuccessful || response.body() == null) {
-                        Toast.makeText(this@DetallePlanActivity,
-                            "Error al crear contrato",
-                            Toast.LENGTH_SHORT).show()
-                        return
-                    }
-
-                    val contratoId = response.body()!!
-                    asignarPlan(contratoId)
-                }
-
-                override fun onFailure(call: Call<Int>, t: Throwable) {
-                    Toast.makeText(this@DetallePlanActivity,
-                        "Error conexión: ${t.message}",
-                        Toast.LENGTH_LONG).show()
-                }
-            })
-    }
-
-    private fun asignarPlan(contratoId: Int) {
-
-        val relacion = ContratoPlan(
-            contrato_id = contratoId,
-            plan_id = planId
-        )
-
-        RetrofitInstance.api.crearContratoPlan(relacion)
-            .enqueue(object : Callback<String> {
-
-                override fun onResponse(call: Call<String>, response: Response<String>) {
+                    println("🔥 RESPONSE CODE: ${response.code()}")
+                    println("🔥 RESPONSE BODY: ${response.body()}")
 
                     if (!response.isSuccessful) {
                         Toast.makeText(
                             this@DetallePlanActivity,
-                            "Error backend: ${response.code()}",
-                            Toast.LENGTH_LONG
+                            "Error backend",
+                            Toast.LENGTH_SHORT
                         ).show()
                         return
                     }
@@ -139,7 +128,8 @@ class DetallePlanActivity : AppCompatActivity() {
                     finish()
                 }
 
-                override fun onFailure(call: Call<String>, t: Throwable) {
+                override fun onFailure(call: Call<Int>, t: Throwable) {
+                    println("🔥 ERROR REAL: ${t.message}")
                     Toast.makeText(
                         this@DetallePlanActivity,
                         "Error: ${t.message}",

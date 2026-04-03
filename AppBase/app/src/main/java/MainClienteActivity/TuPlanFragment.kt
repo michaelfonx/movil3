@@ -16,16 +16,24 @@ class TuPlanFragment : Fragment(R.layout.fragment_tu_plan) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        cargarPlan()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        cargarPlan()
+    }
+
+    private fun cargarPlan() {
+
+        val view = view ?: return
 
         val prefs = requireActivity()
             .getSharedPreferences("APP_PREFS", Context.MODE_PRIVATE)
 
         val clienteId = prefs.getInt("ID", 0)
 
-        println(" ID REAL DESDE ANDROID: $clienteId")
-
         if (clienteId <= 0) {
-            println("ID inválido, no se consulta API")
             mostrarSinPlan(view)
             return
         }
@@ -37,19 +45,17 @@ class TuPlanFragment : Fragment(R.layout.fragment_tu_plan) {
                     call: Call<MiPlanDTO>,
                     response: Response<MiPlanDTO>
                 ) {
-                    println("RESPONSE CODE: ${response.code()}")
+
+                    if (!isAdded) return
+
+                    val view = view ?: return
 
                     if (!response.isSuccessful) {
-                        println("ERROR BACKEND: ${response.code()}")
                         mostrarSinPlan(view)
                         return
                     }
 
-
-                    val data = response.body()
-
-                    if (data == null) {
-                        println("DATA NULL")
+                    val data = response.body() ?: run {
                         mostrarSinPlan(view)
                         return
                     }
@@ -58,7 +64,7 @@ class TuPlanFragment : Fragment(R.layout.fragment_tu_plan) {
                         data.plan_nombre ?: "Sin nombre"
 
                     view.findViewById<TextView>(R.id.txtPrecio).text =
-                        data.plan_precio?.let { "$$it" } ?: ""
+                        "$${data.plan_precio ?: 0}"
 
                     view.findViewById<TextView>(R.id.txtDescripcion).text =
                         data.plan_descripcion ?: "Sin descripción"
@@ -79,17 +85,11 @@ class TuPlanFragment : Fragment(R.layout.fragment_tu_plan) {
                 }
 
                 override fun onFailure(call: Call<MiPlanDTO>, t: Throwable) {
-                    t.printStackTrace()
-                    println("ERROR REAL: ${t.message}")
+                    if (!isAdded) return
+                    val view = view ?: return
                     mostrarSinPlan(view)
                 }
-
-
-
-
             })
-
-
     }
 
     private fun mostrarSinPlan(view: View) {
@@ -101,12 +101,8 @@ class TuPlanFragment : Fragment(R.layout.fragment_tu_plan) {
         view.findViewById<TextView>(R.id.txtDescripcion).text =
             "Adquiere un plan para ver más información"
 
-        view.findViewById<TextView>(R.id.txtServicios).text = ""
-        view.findViewById<TextView>(R.id.txtProductos).text = ""
-        view.findViewById<TextView>(R.id.txtPagos).text = ""
-    }
-    override fun onResume() {
-        super.onResume()
-        view?.let { onViewCreated(it, null) }
+        view.findViewById<TextView>(R.id.txtServicios).text = "Sin servicios"
+        view.findViewById<TextView>(R.id.txtProductos).text = "Sin productos"
+        view.findViewById<TextView>(R.id.txtPagos).text = "Sin pagos"
     }
 }

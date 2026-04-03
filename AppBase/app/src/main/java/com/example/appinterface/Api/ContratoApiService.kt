@@ -3,6 +3,7 @@ package com.example.appinterface.Api
 import com.example.appinterface.model.Contrato
 import com.example.appinterface.model.ContratoPlan
 import com.example.appinterface.model.MiPlanDTO
+import example.appinterface.model.AdquirirPlanRequest
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -35,4 +36,9 @@ interface ContratoApiService {
     fun obtenerMiPlan(
         @Path("clienteId") clienteId: Int
     ): Call<MiPlanDTO>
+
+    @POST("api/adquirir-plan")
+    fun adquirirPlan(
+        @Body body: AdquirirPlanRequest
+    ): Call<Int>
 }

@@ -101,7 +101,6 @@ class MainClienteActivity : AppCompatActivity() {
             editarPerfilLauncher.launch(intent)
         }
 
-
         val btnPlan = header.findViewById<TextView>(R.id.nav_plan)
         val btnAfiliados = header.findViewById<TextView>(R.id.nav_afiliados)
         val btnCartera = header.findViewById<TextView>(R.id.nav_cartera)
@@ -113,6 +112,7 @@ class MainClienteActivity : AppCompatActivity() {
         btnPlan.setOnClickListener {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, TuPlanFragment())
+                .addToBackStack(null) // 🔥 CLAVE
                 .commit()
             cerrarDrawer()
         }
@@ -152,6 +152,14 @@ class MainClienteActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         actualizarFragmentInicio()
+    }
+
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount > 0) {
+            supportFragmentManager.popBackStack()
+        } else {
+            super.onBackPressed()
+        }
     }
 
     fun abrirMenu() {

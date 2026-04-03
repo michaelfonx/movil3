@@ -96,7 +96,17 @@ class LoginActivity : AppCompatActivity() {
 
                             val clienteId = data.cliente_id ?: 0
 
-                            println(" CLIENTE_ID GUARDADO: $clienteId")
+                            println("🔥 CLIENTE_ID GUARDADO: $clienteId")
+
+                            // 🔴 VALIDACIÓN CLAVE
+                            if (clienteId <= 0) {
+                                Toast.makeText(
+                                    this@LoginActivity,
+                                    "Error: usuario sin cliente asociado",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                                return
+                            }
 
                             sharedPref.edit()
                                 .putString("TOKEN", data.token)
@@ -107,24 +117,53 @@ class LoginActivity : AppCompatActivity() {
                                 .putString("CORREO", data.usuario_correo)
                                 .apply()
 
-                            if (clienteId == 0) {
-                                Toast.makeText(this@LoginActivity,
-                                    "Error: cliente_id no válido",
-                                    Toast.LENGTH_LONG).show()
-                                return
-                            }
+                            // 🔥 CORRECCIÓN DEL ROL
+                            when (data.rol.uppercase()) {
 
-                            when (data.rol) {
-                                "Cliente" -> startActivity(Intent(this@LoginActivity, MainClienteActivity::class.java))
-                                "Asesor" -> startActivity(Intent(this@LoginActivity, AsesorActivity::class.java))
-                                "Administrador" -> startActivity(Intent(this@LoginActivity, AdminActivity::class.java))
-                                else -> Toast.makeText(this@LoginActivity, "Rol no reconocido", Toast.LENGTH_LONG).show()
+                                "CLIENTE" -> {
+                                    startActivity(
+                                        Intent(
+                                            this@LoginActivity,
+                                            MainClienteActivity::class.java
+                                        )
+                                    )
+                                }
+
+                                "ASESOR" -> {
+                                    startActivity(
+                                        Intent(
+                                            this@LoginActivity,
+                                            AsesorActivity::class.java
+                                        )
+                                    )
+                                }
+
+                                "ADMINISTRADOR" -> {
+                                    startActivity(
+                                        Intent(
+                                            this@LoginActivity,
+                                            AdminActivity::class.java
+                                        )
+                                    )
+                                }
+
+                                else -> {
+                                    Toast.makeText(
+                                        this@LoginActivity,
+                                        "Rol no reconocido: ${data.rol}",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
                             }
 
                             finish()
 
                         } else {
-                            Toast.makeText(this@LoginActivity, "Credenciales incorrectas", Toast.LENGTH_LONG).show()
+                            Toast.makeText(
+                                this@LoginActivity,
+                                "Credenciales incorrectas",
+                                Toast.LENGTH_LONG
+                            ).show()
                         }
                     }
 
@@ -133,7 +172,13 @@ class LoginActivity : AppCompatActivity() {
                         progress.visibility = View.GONE
                         btnLogin.isEnabled = true
 
-                        Toast.makeText(this@LoginActivity, "Error conexión", Toast.LENGTH_LONG).show()
+                        Toast.makeText(
+                            this@LoginActivity,
+                            "Error conexión",
+                            Toast.LENGTH_LONG
+                        ).show()
+
+                        println("🔥 ERROR LOGIN: ${t.message}")
                     }
                 })
         }
