@@ -1,5 +1,6 @@
 package com.example.appinterface.Api
 
+import com.example.appinterface.model.AfiliadoDTO
 import com.example.appinterface.model.Contrato
 import com.example.appinterface.model.ContratoPlan
 import com.example.appinterface.model.MiPlanDTO
@@ -40,5 +41,19 @@ interface ContratoApiService {
     @POST("api/adquirir-plan")
     fun adquirirPlan(
         @Body body: AdquirirPlanRequest
-    ): Call<Int>
+    ): Call<Map<String, Int>>
+    @POST("api/afiliado")
+    fun agregarAfiliado(
+        @Body body: Map<String, Int>
+    ): Call<String>
+
+    @GET("api/afiliados/{contratoId}")
+    fun obtenerAfiliados(
+        @Path("contratoId") contratoId: Int
+    ): Call<List<AfiliadoDTO>>
+
+    @POST("api/afiliado-documento")
+    fun agregarAfiliadoPorDocumento(
+        @Body body: Map<String, Int>
+    ): Call<String>
 }

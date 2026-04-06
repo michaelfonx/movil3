@@ -10,7 +10,6 @@
         android:clipToPadding="false"
         android:clipChildren="false">
 
-    <!-- CONTENIDO -->
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -20,31 +19,150 @@
                 android:id="@+id/fragmentContainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@id/bottomNav"/>
+                android:layout_above="@id/customNav"
+                android:layout_marginBottom="40dp"/>
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottomNav"
+        <FrameLayout
+                android:id="@+id/customNav"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="90dp"
                 android:layout_alignParentBottom="true"
-                android:background="#FFFFFF"
-                app:menu="@menu/bottom_menu"/>
+                android:elevation="20dp"
+                android:clipChildren="false"
+                android:clipToPadding="false">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_gravity="bottom"
+                    android:orientation="horizontal"
+                    android:background="@drawable/bg_nav"
+                    android:gravity="center"
+                    android:padding="8dp">
+
+                <LinearLayout
+                        android:id="@+id/nav_servicios"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                    <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:src="@android:drawable/ic_menu_agenda"
+                            app:tint="#7B2CBF"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Servicios"
+                            android:textSize="11sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                        android:id="@+id/nav_plan"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                    <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:src="@android:drawable/ic_menu_info_details"
+                            app:tint="#7B2CBF"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Plan"
+                            android:textSize="11sp"/>
+                </LinearLayout>
+
+                <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+
+                <LinearLayout
+                        android:id="@+id/nav_pagos"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                    <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:src="@android:drawable/ic_menu_send"
+                            app:tint="#7B2CBF"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Pagos"
+                            android:textSize="11sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                        android:id="@+id/nav_perfil"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                    <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:src="@android:drawable/ic_menu_myplaces"
+                            app:tint="#7B2CBF"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Perfil"
+                            android:textSize="11sp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <FrameLayout
+                    android:id="@+id/nav_inicio"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="top|center_horizontal"
+                    android:background="@drawable/bg_boton_central"
+                    android:elevation="30dp"
+                    android:translationY="-0.1dp"
+                    android:gravity="center">
+
+                <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/ic_home"
+                        app:tint="#000000"
+                android:layout_gravity="center"/>
+
+            </FrameLayout>
+
+        </FrameLayout>
 
     </RelativeLayout>
 
-    <!-- MENÚ -->
     <com.google.android.material.navigation.NavigationView
             android:id="@+id/nav_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-
             android:background="@android:color/transparent"
             android:padding="0dp"
-
             android:overScrollMode="never"
             android:scrollbars="none"
-
             app:headerLayout="@layout/menu_lateral_custom"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

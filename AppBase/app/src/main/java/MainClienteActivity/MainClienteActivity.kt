@@ -13,9 +13,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.appinterface.R
+import com.example.appinterface.activities.ContratoActivity
 import com.example.appinterface.activitys.activityUsuarios.EditarPerfilActivity
 import com.example.appinterface.activitys.activityUsuarios.LoginActivity
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.appinterface.fragments.AfiliadosFragment
 import com.google.android.material.navigation.NavigationView
 
 class MainClienteActivity : AppCompatActivity() {
@@ -47,7 +48,6 @@ class MainClienteActivity : AppCompatActivity() {
         drawer = findViewById(R.id.drawer_layout)
         drawer.setScrimColor(Color.TRANSPARENT)
 
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
         val navView = findViewById<NavigationView>(R.id.nav_view)
 
         if (savedInstanceState == null) {
@@ -56,19 +56,34 @@ class MainClienteActivity : AppCompatActivity() {
                 .commit()
         }
 
-        bottomNav.setOnItemSelectedListener {
-            val fragment = when (it.itemId) {
-                R.id.nav_inicio -> InicioFragment()
-                R.id.nav_servicios -> ServiciosFragment()
-                R.id.nav_pagos -> PagosFragment()
-                else -> InicioFragment()
-            }
-
+        findViewById<FrameLayout>(R.id.nav_inicio).setOnClickListener {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, fragment)
+                .replace(R.id.fragmentContainer, InicioFragment())
                 .commit()
+        }
 
-            true
+        findViewById<LinearLayout>(R.id.nav_servicios).setOnClickListener {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, ServiciosFragment())
+                .commit()
+        }
+
+        findViewById<LinearLayout>(R.id.nav_plan).setOnClickListener {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, TuPlanFragment())
+                .commit()
+        }
+
+        findViewById<LinearLayout>(R.id.nav_pagos).setOnClickListener {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, PagosFragment())
+                .commit()
+        }
+
+        findViewById<LinearLayout>(R.id.nav_perfil).setOnClickListener {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, PerfilFragment())
+                .commit()
         }
 
         val header = navView.getHeaderView(0)
@@ -112,17 +127,46 @@ class MainClienteActivity : AppCompatActivity() {
         btnPlan.setOnClickListener {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, TuPlanFragment())
-                .addToBackStack(null) // 🔥 CLAVE
+                .addToBackStack(null)
                 .commit()
             cerrarDrawer()
         }
 
-        btnAfiliados.setOnClickListener { toast("Afiliados"); cerrarDrawer() }
-        btnCartera.setOnClickListener { toast("Cartera"); cerrarDrawer() }
-        btnPagos.setOnClickListener { toast("Pagos"); cerrarDrawer() }
-        btnSedes.setOnClickListener { toast("Mapa próximamente"); cerrarDrawer() }
-        btnAsesor.setOnClickListener { toast("Asesor próximamente"); cerrarDrawer() }
-        btnLogout.setOnClickListener { cerrarSesion() }
+        btnAfiliados.setOnClickListener {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, AfiliadosFragment())
+                .addToBackStack(null)
+                .commit()
+            cerrarDrawer()
+        }
+
+        btnCartera.setOnClickListener {
+            val intent = Intent(this, ContratoActivity::class.java)
+            startActivity(intent)
+            cerrarDrawer()
+        }
+
+        btnPagos.setOnClickListener {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, PagosFragment())
+                .addToBackStack(null)
+                .commit()
+            cerrarDrawer()
+        }
+
+        btnSedes.setOnClickListener {
+            toast("Sedes próximamente")
+            cerrarDrawer()
+        }
+
+        btnAsesor.setOnClickListener {
+            toast("Asesor próximamente")
+            cerrarDrawer()
+        }
+
+        btnLogout.setOnClickListener {
+            cerrarSesion()
+        }
     }
 
     private fun recargarPerfil() {

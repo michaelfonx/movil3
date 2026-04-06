@@ -98,7 +98,7 @@
             <TextView
                     android:id="@+id/nav_cartera"
                     style="@style/menuItem"
-                    android:text="Cartera"/>
+                    android:text="Contrato"/>
             <View style="@style/divider"/>
 
             <TextView

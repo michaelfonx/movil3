@@ -12,7 +12,9 @@ interface PagoApiService {
     ): Call<List<Pago>>
 
     @POST("api/pagos")
-    fun crearPago(@Body pago: Pago): Call<Pago>
+    fun crearPago(
+        @Body pago: Pago
+    ): Call<Void>
 
     @PUT("api/pagos/{id}")
     fun actualizarPago(

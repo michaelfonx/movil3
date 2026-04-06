@@ -5,14 +5,14 @@
         android:layout_height="match_parent"
         android:background="@drawable/bg_inicio_morado">
 
-    <!-- 🔥 FONDO DECORATIVO (ATRÁS DE TODO) -->
+
     <View
             android:layout_width="match_parent"
             android:layout_height="280dp"
             android:background="@drawable/bg_decoracion"
             app:layout_constraintTop_toTopOf="parent"/>
 
-    <!-- 🔥 HEADER -->
+
     <LinearLayout
             android:id="@+id/header"
             android:layout_width="0dp"
@@ -26,7 +26,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- BOTÓN MENU -->
+
         <ImageView
                 android:id="@+id/btnMenu"
                 android:layout_width="50dp"
