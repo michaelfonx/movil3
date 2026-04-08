@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.appinterface.R
 import com.example.appinterface.Api.RetrofitInstance
-import com.example.appinterface.model.MiPlanDTO
+import model.DTO.MiPlanDTO
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

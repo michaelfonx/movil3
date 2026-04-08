@@ -1,9 +1,9 @@
 package com.example.appinterface.Api
 
-import com.example.appinterface.model.AfiliadoDTO
+import model.DTO.AfiliadoDTO
 import com.example.appinterface.model.Contrato
 import com.example.appinterface.model.ContratoPlan
-import com.example.appinterface.model.MiPlanDTO
+import model.DTO.MiPlanDTO
 import example.appinterface.model.AdquirirPlanRequest
 import retrofit2.Call
 import retrofit2.http.*

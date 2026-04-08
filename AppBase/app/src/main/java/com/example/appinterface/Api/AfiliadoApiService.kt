@@ -1,6 +1,6 @@
 package com.example.appinterface.Api
 
-import com.example.appinterface.model.AfiliadoDTO
+import model.DTO.AfiliadoDTO
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body

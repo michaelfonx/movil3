@@ -11,7 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.appinterface.R
 import com.example.appinterface.Api.RetrofitInstance
-import com.example.appinterface.model.AfiliadoDTO
+import model.DTO.AfiliadoDTO
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback

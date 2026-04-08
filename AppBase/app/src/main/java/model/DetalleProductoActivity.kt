@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.appinterface.R
 import com.example.appinterface.Api.RetrofitInstance
 import com.example.appinterface.manager.CarritoManager
+import model.DTO.MiPlanDTO
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -49,11 +50,11 @@ class DetalleProductoActivity : AppCompatActivity() {
             }
 
             RetrofitInstance.api.obtenerMiPlan(clienteId)
-                .enqueue(object : Callback<com.example.appinterface.model.MiPlanDTO> {
+                .enqueue(object : Callback<MiPlanDTO> {
 
                     override fun onResponse(
-                        call: Call<com.example.appinterface.model.MiPlanDTO>,
-                        response: Response<com.example.appinterface.model.MiPlanDTO>
+                        call: Call<MiPlanDTO>,
+                        response: Response<MiPlanDTO>
                     ) {
 
                         val contratoId = response.body()?.contrato_id ?: 0
@@ -113,7 +114,7 @@ class DetalleProductoActivity : AppCompatActivity() {
                     }
 
                     override fun onFailure(
-                        call: Call<com.example.appinterface.model.MiPlanDTO>,
+                        call: Call<MiPlanDTO>,
                         t: Throwable
                     ) {
                         Toast.makeText(

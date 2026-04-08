@@ -1,42 +1,124 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:padding="20dp"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-
-    <!-- NOMBRE -->
-    <TextView
-            android:id="@+id/txtNombre"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Plan"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-    <!-- PRECIO -->
-    <TextView
-            android:id="@+id/txtPrecio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="$0"
-            android:textSize="18sp"
-            android:textColor="#6A1B9A"
-            android:layout_marginTop="8dp" />
-
-    <!-- DESCRIPCIÓN -->
-    <TextView
-            android:id="@+id/txtDescripcion"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Descripción del plan"
-            android:layout_marginTop="12dp" />
+            android:layout_height="match_parent"
+            android:background="#F5F5F5">
 
-    <!-- BOTÓN -->
-    <Button
-            android:id="@+id/btnAdquirir"
+    <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Adquirir plan"
-            android:layout_marginTop="20dp" />
+            android:layout_height="wrap_content">
 
-</LinearLayout>
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="250dp">
+
+            <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/plan1" />
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#80000000" />
+
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_gravity="bottom"
+                    android:padding="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:id="@+id/txtNombre"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Plan Básico"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF" />
+
+                <TextView
+                        android:id="@+id/txtPrecio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$30.000"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="#FFD54F"
+                        android:layout_marginTop="4dp" />
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:id="@+id/txtDescripcion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Descripción del plan"
+                    android:textSize="15sp"
+                    android:textColor="#444444" />
+
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card_detalle"
+                    android:elevation="6dp"
+                    android:padding="16dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Este plan incluye"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="8dp" />
+
+                <TextView
+                        android:id="@+id/txtServicios"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="✔ Servicio 1\n✔ Servicio 2"
+                        android:textSize="14sp" />
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Productos incluidos"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:layout_marginTop="20dp"/>
+
+                <TextView
+                        android:id="@+id/txtProductos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:layout_marginTop="8dp"/>
+
+            </LinearLayout>
+
+            <Button
+                    android:id="@+id/btnAdquirir"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:text="Adquirir plan"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:background="@drawable/bg_boton_central"
+                    android:layout_marginTop="30dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

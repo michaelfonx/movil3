@@ -1,8 +1,12 @@
 package com.example.appinterface.Api
 
+import com.example.appinterface.model.DetallePlanDTO
 import com.example.appinterface.model.Plan
 import retrofit2.Call
 import retrofit2.http.*
+import retrofit2.http.GET
+import retrofit2.http.Path
+
 
 interface PlanApiService {
 
@@ -26,4 +30,8 @@ interface PlanApiService {
 
     @DELETE("api/planes/{id}")
     fun eliminarPlan(@Path("id") id: Int): Call<String>
+
+
+    @GET("api/planes/{id}/detalle")
+    fun obtenerDetallePlan(@Path("id") id: Int): Call<DetallePlanDTO>
 }
