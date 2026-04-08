@@ -26,7 +26,7 @@ class TuPlanFragment : Fragment(R.layout.fragment_tu_plan) {
 
     private fun cargarPlan() {
 
-        val view = view ?: return
+        val currentView = view ?: return
 
         val prefs = requireActivity()
             .getSharedPreferences("APP_PREFS", Context.MODE_PRIVATE)
@@ -34,7 +34,7 @@ class TuPlanFragment : Fragment(R.layout.fragment_tu_plan) {
         val clienteId = prefs.getInt("ID", 0)
 
         if (clienteId <= 0) {
-            mostrarSinPlan(view)
+            mostrarSinPlan(currentView)
             return
         }
 
@@ -48,46 +48,42 @@ class TuPlanFragment : Fragment(R.layout.fragment_tu_plan) {
 
                     if (!isAdded) return
 
-                    val view = view ?: return
+                    val v = view ?: return
 
-                    if (!response.isSuccessful) {
-                        mostrarSinPlan(view)
+                    val data = response.body()
+
+                    if (!response.isSuccessful || data == null) {
+                        mostrarSinPlan(v)
                         return
                     }
 
-                    val data = response.body() ?: run {
-                        mostrarSinPlan(view)
-                        return
-                    }
-
-                    view.findViewById<TextView>(R.id.txtPlanNombre).text =
+                    v.findViewById<TextView>(R.id.txtPlanNombre).text =
                         data.plan_nombre ?: "Sin nombre"
 
-                    view.findViewById<TextView>(R.id.txtPrecio).text =
+                    v.findViewById<TextView>(R.id.txtPrecio).text =
                         "$${data.plan_precio ?: 0}"
 
-                    view.findViewById<TextView>(R.id.txtDescripcion).text =
+                    v.findViewById<TextView>(R.id.txtDescripcion).text =
                         data.plan_descripcion ?: "Sin descripción"
 
-                    view.findViewById<TextView>(R.id.txtServicios).text =
-                        if (data.servicios.isNullOrEmpty()) "Sin servicios"
-                        else data.servicios.joinToString("\n") { "• $it" }
+                    v.findViewById<TextView>(R.id.txtServicios).text =
+                        data.servicios?.joinToString("\n") { "• $it" }
+                            ?: "Sin servicios"
 
-                    view.findViewById<TextView>(R.id.txtProductos).text =
-                        if (data.productos.isNullOrEmpty()) "Sin productos"
-                        else data.productos.joinToString("\n") { "• $it" }
+                    v.findViewById<TextView>(R.id.txtProductos).text =
+                        data.productos?.joinToString("\n") { "• $it" }
+                            ?: "Sin productos"
 
-                    view.findViewById<TextView>(R.id.txtPagos).text =
-                        if (data.pagos.isNullOrEmpty()) "Sin pagos"
-                        else data.pagos.joinToString("\n") {
+                    v.findViewById<TextView>(R.id.txtPagos).text =
+                        data.pagos?.joinToString("\n") {
                             "• ${it.metodo} - ${it.fecha}"
-                        }
+                        } ?: "Sin pagos"
                 }
 
                 override fun onFailure(call: Call<MiPlanDTO>, t: Throwable) {
                     if (!isAdded) return
-                    val view = view ?: return
-                    mostrarSinPlan(view)
+                    val v = view ?: return
+                    mostrarSinPlan(v)
                 }
             })
     }

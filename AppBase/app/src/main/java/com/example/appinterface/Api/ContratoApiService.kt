@@ -56,4 +56,8 @@ interface ContratoApiService {
     fun agregarAfiliadoPorDocumento(
         @Body body: Map<String, Int>
     ): Call<String>
+    @POST("api/contrato-producto")
+    fun agregarProductoContrato(
+        @Body body: Map<String, Int>
+    ): Call<Map<String, String>>
 }

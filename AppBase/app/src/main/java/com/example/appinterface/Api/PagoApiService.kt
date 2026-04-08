@@ -26,4 +26,8 @@ interface PagoApiService {
     fun eliminarPago(
         @Path("id") id: Int
     ): Call<Void>
+    @POST("api/contrato-producto")
+    fun agregarProductoContrato(
+        @Body body: Map<String, Int>
+    ): Call<String>
 }

@@ -1,0 +1,40 @@
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:layout_margin="8dp"
+        android:elevation="4dp"
+        android:background="@drawable/bg_card">
+
+    <!-- Nombre -->
+    <TextView
+            android:id="@+id/txtNombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:textColor="#000"/>
+
+    <!-- Precio -->
+    <TextView
+            android:id="@+id/txtPrecio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#7B2CBF"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"/>
+
+
+    <TextView
+            android:id="@+id/btnAgregar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Agregar"
+            android:gravity="center"
+            android:padding="6dp"
+            android:background="#7B2CBF"
+            android:textColor="#FFF"
+            android:layout_marginTop="8dp"/>
+</LinearLayout>

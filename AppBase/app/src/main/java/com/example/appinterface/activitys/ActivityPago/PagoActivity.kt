@@ -60,11 +60,17 @@ class PagoActivity : AppCompatActivity() {
                     response: Response<Map<String, Int>>
                 ) {
 
-                    val contratoId = response.body()?.get("contrato_id") ?: 0
-
-                    if (!response.isSuccessful || contratoId == 0) {
+                    if (!response.isSuccessful || response.body() == null) {
                         btn.isEnabled = true
                         Toast.makeText(this@PagoActivity, "Error al crear contrato", Toast.LENGTH_SHORT).show()
+                        return
+                    }
+
+                    val contratoId = response.body()!!["contrato_id"] ?: 0
+
+                    if (contratoId == 0) {
+                        btn.isEnabled = true
+                        Toast.makeText(this@PagoActivity, "Contrato inválido", Toast.LENGTH_SHORT).show()
                         return
                     }
 

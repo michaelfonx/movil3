@@ -6,11 +6,11 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.view.Gravity
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.appinterface.R
 import com.example.appinterface.activities.ContratoActivity
@@ -50,6 +50,7 @@ class MainClienteActivity : AppCompatActivity() {
 
         val navView = findViewById<NavigationView>(R.id.nav_view)
 
+        // Fragment inicial (SIN backstack)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, InicioFragment())
@@ -59,30 +60,35 @@ class MainClienteActivity : AppCompatActivity() {
         findViewById<FrameLayout>(R.id.nav_inicio).setOnClickListener {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, InicioFragment())
+                .addToBackStack(null)
                 .commit()
         }
 
         findViewById<LinearLayout>(R.id.nav_servicios).setOnClickListener {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, ServiciosFragment())
+                .addToBackStack(null)
                 .commit()
         }
 
-        findViewById<LinearLayout>(R.id.nav_plan).setOnClickListener {
+        findViewById<LinearLayout>(R.id.nav_tienda).setOnClickListener {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, TuPlanFragment())
+                .replace(R.id.fragmentContainer, TiendaFragment())
+                .addToBackStack(null)
                 .commit()
         }
 
         findViewById<LinearLayout>(R.id.nav_pagos).setOnClickListener {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, PagosFragment())
+                .addToBackStack(null)
                 .commit()
         }
 
         findViewById<LinearLayout>(R.id.nav_perfil).setOnClickListener {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, PerfilFragment())
+                .addToBackStack(null)
                 .commit()
         }
 
@@ -207,11 +213,11 @@ class MainClienteActivity : AppCompatActivity() {
     }
 
     fun abrirMenu() {
-        drawer.openDrawer(Gravity.START)
+        drawer.openDrawer(GravityCompat.START)
     }
 
     private fun cerrarDrawer() {
-        drawer.closeDrawer(Gravity.START)
+        drawer.closeDrawer(GravityCompat.START)
     }
 
     private fun toast(msg: String) {

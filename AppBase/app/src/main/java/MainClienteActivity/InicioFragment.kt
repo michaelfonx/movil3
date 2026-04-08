@@ -1,5 +1,6 @@
 package MainClienteActivity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -12,13 +13,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.appinterface.R
 import com.example.appinterface.Api.RetrofitInstance
 import com.example.appinterface.MainClienteActivity.MainClienteActivity
+import com.example.appinterface.activitys.CarritoActivity
 import com.example.appinterface.adapter.PlanAdapter
 import com.example.appinterface.model.Plan
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class InicioFragment : Fragment(R.layout.activity_cliente) {
+class InicioFragment : Fragment(R.layout.fragment_inicio) {
 
     private lateinit var txtBienvenido: TextView
     private lateinit var txtNombre: TextView
@@ -28,12 +30,17 @@ class InicioFragment : Fragment(R.layout.activity_cliente) {
 
         txtBienvenido = view.findViewById(R.id.txtBienvenido)
         txtNombre = view.findViewById(R.id.txtNombre)
+
         val btnMenu = view.findViewById<ImageView>(R.id.btnMenu)
+        val btnCarrito = view.findViewById<ImageView>(R.id.btnCarrito)
 
         btnMenu.setOnClickListener {
             (activity as MainClienteActivity).abrirMenu()
         }
 
+        btnCarrito.setOnClickListener {
+            startActivity(Intent(requireContext(), CarritoActivity::class.java))
+        }
 
         actualizarBienvenido()
 
@@ -56,7 +63,6 @@ class InicioFragment : Fragment(R.layout.activity_cliente) {
         })
     }
 
-
     fun actualizarBienvenido() {
 
         val prefs = requireActivity()
@@ -65,10 +71,7 @@ class InicioFragment : Fragment(R.layout.activity_cliente) {
         val nombre = prefs.getString("NOMBRE", "") ?: ""
         val apellido = prefs.getString("APELLIDO", "") ?: ""
 
-
         txtBienvenido.text = "Bienvenido"
-
-
         txtNombre.text = "${nombre} ${apellido}"
     }
 }

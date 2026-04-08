@@ -47,6 +47,8 @@
         <activity android:name=".activities.DetallePlanActivity"/>
         <activity android:name=".activities.PagoActivity" />
         <activity android:name=".activities.ContratoActivity"/>
+        <activity android:name=".model.DetalleProductoActivity"/>
+        <activity android:name=".activitys.CarritoActivity"/>
         <provider
                 android:name="androidx.core.content.FileProvider"
                 android:authorities="${applicationId}.provider"

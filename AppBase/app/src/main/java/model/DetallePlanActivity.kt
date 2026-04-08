@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.appinterface.R
 import com.example.appinterface.Api.RetrofitInstance
 import com.example.appinterface.model.MiPlanDTO
+import example.appinterface.model.AdquirirPlanRequest
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -59,6 +60,9 @@ class DetallePlanActivity : AppCompatActivity() {
                     val data = response.body()
 
                     if (response.isSuccessful && data != null && (data.contrato_id ?: 0) > 0) {
+
+                        val prefs = getSharedPreferences("APP_PREFS", MODE_PRIVATE)
+                        prefs.edit().putInt("CONTRATO_ID", data.contrato_id ?: 0).apply()
 
                         Toast.makeText(
                             this@DetallePlanActivity,
