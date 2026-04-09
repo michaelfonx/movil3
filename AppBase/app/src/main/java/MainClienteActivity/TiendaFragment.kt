@@ -20,7 +20,9 @@ class TiendaFragment : Fragment(R.layout.fragment_tienda) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         val recycler = view.findViewById<RecyclerView>(R.id.recyclerCategorias)
-        recycler.layoutManager = GridLayoutManager(context, 2)
+        recycler.layoutManager = GridLayoutManager(context, 2).apply {
+            orientation = RecyclerView.VERTICAL
+        }
 
         cargarCategorias(recycler)
     }
@@ -34,8 +36,8 @@ class TiendaFragment : Fragment(R.layout.fragment_tienda) {
                     call: Call<List<Categoria>>,
                     response: Response<List<Categoria>>
                 ) {
-
                     if (response.isSuccessful) {
+
                         val lista = response.body() ?: emptyList()
 
                         recycler.adapter = CategoriaAdapter(lista) { categoria ->

@@ -1,5 +1,32 @@
-<androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerCategorias"
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="12dp" xmlns:android="http://schemas.android.com/apk/res/android"/>
+        android:background="#9C27B0"
+        android:padding="16dp">
+
+    <!-- TITULO -->  <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tienda"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"/>
+
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Categorías"
+            android:textSize="16sp"
+            android:textColor="#E1BEE7"
+            android:layout_marginBottom="10dp"/>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerCategorias"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+</LinearLayout>

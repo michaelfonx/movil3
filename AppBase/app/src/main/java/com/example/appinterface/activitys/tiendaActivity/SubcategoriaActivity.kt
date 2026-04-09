@@ -19,7 +19,14 @@ class SubcategoriaActivity : AppCompatActivity() {
         setContentView(R.layout.activity_subcategoria)
 
         val recycler = findViewById<RecyclerView>(R.id.recyclerSub)
+
         recycler.layoutManager = GridLayoutManager(this, 2)
+        recycler.setHasFixedSize(true)
+
+        // 🔥 ESPACIADO PRO
+        recycler.addItemDecoration(
+            GridSpacingItemDecoration(2, 30, true)
+        )
 
         val categoriaId = intent.getIntExtra("CATEGORIA_ID", 0)
 
@@ -36,7 +43,8 @@ class SubcategoriaActivity : AppCompatActivity() {
                     response: Response<List<Subcategoria>>
                 ) {
                     if (response.isSuccessful) {
-                        recycler.adapter = SubcategoriaAdapter(response.body() ?: emptyList())
+                        recycler.adapter =
+                            SubcategoriaAdapter(response.body() ?: emptyList())
                     }
                 }
 

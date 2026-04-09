@@ -1,5 +1,53 @@
-<androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerSub"
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="12dp" xmlns:android="http://schemas.android.com/apk/res/android"/>
+        android:orientation="vertical"
+        android:background="@drawable/bg_tienda">
+
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tienda"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Subcategorías"
+                android:textSize="16sp"
+                android:textColor="#E0E0E0"
+                android:layout_marginTop="4dp"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F3EEF6"
+            android:orientation="vertical"
+            android:paddingTop="10dp"
+            android:paddingHorizontal="8dp"
+            android:clipToPadding="false">
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerSub"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"/>
+
+    </LinearLayout>
+
+</LinearLayout>

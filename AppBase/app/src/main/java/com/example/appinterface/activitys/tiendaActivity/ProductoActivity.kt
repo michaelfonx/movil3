@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.appinterface.MainClienteActivity.ProductoAdapter
+import com.example.appinterface.Adapter.ProductoAdapter
 import com.example.appinterface.Api.RetrofitInstance
 import com.example.appinterface.R
 import com.example.appinterface.model.Producto
@@ -23,12 +23,7 @@ class ProductoActivity : AppCompatActivity() {
 
         val subcategoriaId = intent.getIntExtra("SUBCATEGORIA_ID", 0)
 
-        cargarProductos(subcategoriaId, recycler)
-    }
-
-    private fun cargarProductos(id: Int, recycler: RecyclerView) {
-
-        RetrofitInstance.productoApi.obtenerProductosPorSubcategoria(id)
+        RetrofitInstance.productoApi.obtenerProductosPorSubcategoria(subcategoriaId)
             .enqueue(object : Callback<List<Producto>> {
 
                 override fun onResponse(

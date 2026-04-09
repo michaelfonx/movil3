@@ -2,24 +2,35 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_margin="8dp"
-        card_view:cardCornerRadius="16dp"
-        card_view:cardElevation="4dp">
+        android:layout_height="180dp"
+        android:layout_margin="10dp"
+        card_view:cardCornerRadius="20dp"
+        card_view:cardElevation="8dp"
+        card_view:cardUseCompatPadding="true">
 
     <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:padding="12dp">
+
+        <ImageView
+                android:id="@+id/imgCategoria"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:scaleType="centerInside"
+                android:layout_marginBottom="10dp"/>
 
         <TextView
                 android:id="@+id/txtNombre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Categoria"
+                android:text="Categoría"
                 android:textStyle="bold"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:textColor="#222222"
+                android:gravity="center"/>
 
     </LinearLayout>
 
