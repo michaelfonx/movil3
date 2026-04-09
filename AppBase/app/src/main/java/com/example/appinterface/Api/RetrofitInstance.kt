@@ -46,6 +46,13 @@ object RetrofitInstance {
     val productoApi: ProductoApiService by lazy {
         retrofit.create(ProductoApiService::class.java)
     }
+    val categoriaApi: CategoriaApiService by lazy {
+        retrofit.create(CategoriaApiService::class.java)
+    }
+    val subcategoriaApi: SubcategoriaApiService by lazy {
+        retrofit.create(SubcategoriaApiService::class.java)
+    }
+
 
 
 }

@@ -2,15 +2,12 @@ package com.example.appinterface.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.appinterface.R
 import com.example.appinterface.Api.RetrofitInstance
+import com.example.appinterface.model.Usuario
 import model.DTO.AfiliadoDTO
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -36,10 +33,11 @@ class AfiliadosFragment : Fragment(R.layout.fragment_afiliados) {
 
         cargarAfiliados(view)
 
-        val btnAgregar = view.findViewById<Button>(R.id.btnAgregarAfiliado)
+        val btnBuscar = view.findViewById<Button>(R.id.btnAgregarAfiliado)
         val input = view.findViewById<EditText>(R.id.inputUsuarioId)
 
-        btnAgregar.setOnClickListener {
+        // 🔥 AHORA ES BUSCAR, NO AGREGAR DIRECTO
+        btnBuscar.setOnClickListener {
 
             val documento = input.text.toString().toIntOrNull()
 
@@ -48,11 +46,14 @@ class AfiliadosFragment : Fragment(R.layout.fragment_afiliados) {
                 return@setOnClickListener
             }
 
-            agregarAfiliadoPorDocumento(documento, view)
+            buscarUsuario(documento, view)
         }
     }
 
+    // 🔥 CARGAR AFILIADOS (CARDS)
     private fun cargarAfiliados(view: View) {
+
+        val layout = view.findViewById<LinearLayout>(R.id.layoutAfiliados)
 
         RetrofitInstance.afiliadoApi.obtenerAfiliados(contratoId)
             .enqueue(object : Callback<List<AfiliadoDTO>> {
@@ -62,6 +63,8 @@ class AfiliadosFragment : Fragment(R.layout.fragment_afiliados) {
                     response: Response<List<AfiliadoDTO>>
                 ) {
 
+                    layout.removeAllViews()
+
                     if (!response.isSuccessful) {
                         Toast.makeText(context, "Error HTTP: ${response.code()}", Toast.LENGTH_SHORT).show()
                         return
@@ -69,12 +72,25 @@ class AfiliadosFragment : Fragment(R.layout.fragment_afiliados) {
 
                     val lista = response.body() ?: emptyList()
 
-                    val texto = if (lista.isEmpty()) "Sin afiliados"
-                    else lista.joinToString("\n") {
-                        "• ${it.nombre} ${it.apellido}"
+                    if (lista.isEmpty()) {
+                        val txt = TextView(context)
+                        txt.text = "Sin afiliados"
+                        layout.addView(txt)
+                        return
                     }
 
-                    view.findViewById<TextView>(R.id.txtAfiliados).text = texto
+                    for (afiliado in lista) {
+
+                        val card = layoutInflater.inflate(R.layout.item_afiliado, null)
+
+                        val nombre = card.findViewById<TextView>(R.id.txtNombre)
+                        val documento = card.findViewById<TextView>(R.id.txtDocumento)
+
+                        nombre.text = "${afiliado.nombre} ${afiliado.apellido}"
+                        documento.text = "Documento: ${afiliado.usuario_id}"
+
+                        layout.addView(card)
+                    }
                 }
 
                 override fun onFailure(call: Call<List<AfiliadoDTO>>, t: Throwable) {
@@ -83,12 +99,57 @@ class AfiliadosFragment : Fragment(R.layout.fragment_afiliados) {
             })
     }
 
-    private fun agregarAfiliadoPorDocumento(documento: Int, view: View) {
 
-        if (contratoId == 0) {
-            Toast.makeText(context, "Contrato inválido", Toast.LENGTH_SHORT).show()
-            return
-        }
+    private fun buscarUsuario(documento: Int, view: View) {
+
+        val layout = view.findViewById<LinearLayout>(R.id.layoutAfiliados)
+
+        RetrofitInstance.usuarioApi.buscarPorDocumento(documento)
+            .enqueue(object : Callback<Usuario> {
+
+                override fun onResponse(call: Call<Usuario>, response: Response<Usuario>) {
+
+                    if (!response.isSuccessful || response.body() == null) {
+                        Toast.makeText(context, "Usuario no encontrado", Toast.LENGTH_SHORT).show()
+                        return
+                    }
+
+                    val usuario = response.body()!!
+
+                    layout.removeAllViews()
+
+                    val card = layoutInflater.inflate(R.layout.item_afiliado, null)
+
+                    val nombre = card.findViewById<TextView>(R.id.txtNombre)
+                    val documentoTxt = card.findViewById<TextView>(R.id.txtDocumento)
+
+                    nombre.text =
+                        "${usuario.usuario_primer_nombre} ${usuario.usuario_primer_apellido}"
+                    documentoTxt.text = "Documento: ${usuario.usuario_documento}"
+
+                    val btnAgregar = Button(requireContext())
+                    btnAgregar.text = "Agregar afiliado"
+                    btnAgregar.setBackgroundTintList(resources.getColorStateList(R.color.purple_700))
+                    btnAgregar.setTextColor(resources.getColor(android.R.color.white))
+
+                    btnAgregar.setOnClickListener {
+                        agregarAfiliadoPorDocumento(usuario.usuario_documento, view)
+                    }
+
+                    val container = card.findViewById<LinearLayout>(R.id.containerCard)
+                    container.addView(btnAgregar)
+
+                    layout.addView(card)
+                }
+
+                override fun onFailure(call: Call<Usuario>, t: Throwable) {
+                    Toast.makeText(context, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
+    }
+
+
+    private fun agregarAfiliadoPorDocumento(documento: Int, view: View) {
 
         val body = mapOf(
             "contrato_id" to contratoId,
@@ -109,6 +170,8 @@ class AfiliadosFragment : Fragment(R.layout.fragment_afiliados) {
                     val mensaje = response.body()?.string() ?: "Sin respuesta"
 
                     Toast.makeText(context, mensaje, Toast.LENGTH_LONG).show()
+
+
                     cargarAfiliados(view)
                 }
 

@@ -1,16 +1,16 @@
 package com.example.appinterface.MainClienteActivity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
-import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.appinterface.Adapter.CategoriaAdapter
 import com.example.appinterface.R
 import com.example.appinterface.Api.RetrofitInstance
-import com.example.appinterface.model.Producto
+import com.example.appinterface.activitys.tiendaActivity.SubcategoriaActivity
+import com.example.appinterface.model.Categoria
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -19,64 +19,39 @@ class TiendaFragment : Fragment(R.layout.fragment_tienda) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val recycler = view.findViewById<RecyclerView>(R.id.recyclerProductos)
-        val etBuscar = view.findViewById<EditText>(R.id.etBuscar)
-
+        val recycler = view.findViewById<RecyclerView>(R.id.recyclerCategorias)
         recycler.layoutManager = GridLayoutManager(context, 2)
 
-
-        cargarProductos(recycler)
-
-
-        etBuscar.addTextChangedListener {
-
-            val texto = it.toString()
-
-            if (texto.isNotEmpty()) {
-
-                RetrofitInstance.productoApi.buscarProductos(texto)
-                    .enqueue(object : Callback<List<Producto>> {
-
-                        override fun onResponse(
-                            call: Call<List<Producto>>,
-                            response: Response<List<Producto>>
-                        ) {
-                            if (response.isSuccessful) {
-                                val lista = response.body() ?: emptyList()
-                                recycler.adapter = ProductoAdapter(lista)
-                            }
-                        }
-
-                        override fun onFailure(call: Call<List<Producto>>, t: Throwable) {
-                            Toast.makeText(context, "Error en búsqueda", Toast.LENGTH_SHORT).show()
-                        }
-                    })
-
-            } else {
-                cargarProductos(recycler)
-            }
-        }
+        cargarCategorias(recycler)
     }
 
+    private fun cargarCategorias(recycler: RecyclerView) {
 
-    fun cargarProductos(recycler: RecyclerView) {
-
-        RetrofitInstance.productoApi.obtenerProductos()
-            .enqueue(object : Callback<List<Producto>> {
+        RetrofitInstance.categoriaApi.obtenerCategorias()
+            .enqueue(object : Callback<List<Categoria>> {
 
                 override fun onResponse(
-                    call: Call<List<Producto>>,
-                    response: Response<List<Producto>>
+                    call: Call<List<Categoria>>,
+                    response: Response<List<Categoria>>
                 ) {
+
                     if (response.isSuccessful) {
                         val lista = response.body() ?: emptyList()
-                        recycler.adapter = ProductoAdapter(lista)
+
+                        recycler.adapter = CategoriaAdapter(lista) { categoria ->
+
+                            val intent = Intent(
+                                requireContext(),
+                                SubcategoriaActivity::class.java
+                            )
+
+                            intent.putExtra("CATEGORIA_ID", categoria.categoria_id)
+                            startActivity(intent)
+                        }
                     }
                 }
 
-                override fun onFailure(call: Call<List<Producto>>, t: Throwable) {
-                    Toast.makeText(context, "Error cargando productos", Toast.LENGTH_SHORT).show()
-                }
+                override fun onFailure(call: Call<List<Categoria>>, t: Throwable) {}
             })
     }
 }

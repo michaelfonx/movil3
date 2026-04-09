@@ -1,23 +1,5 @@
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        android:padding="8dp"
+<androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerCategorias"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-    <EditText
-            android:id="@+id/etBuscar"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="Buscar productos..."
-            android:padding="12dp"
-            android:background="@drawable/bg_card"/>
-
-
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerProductos"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="8dp"/>
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:padding="12dp" xmlns:android="http://schemas.android.com/apk/res/android"/>

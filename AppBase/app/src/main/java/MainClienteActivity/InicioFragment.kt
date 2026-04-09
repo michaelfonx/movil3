@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.appinterface.R
 import com.example.appinterface.Api.RetrofitInstance
 import com.example.appinterface.MainClienteActivity.MainClienteActivity
-import com.example.appinterface.activitys.CarritoActivity
+import com.example.appinterface.activitys.tiendaActivity.CarritoActivity
 import com.example.appinterface.adapter.PlanAdapter
 import com.example.appinterface.model.Plan
 import retrofit2.Call
