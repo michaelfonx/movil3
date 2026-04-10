@@ -17,6 +17,11 @@ import com.example.appinterface.activities.ContratoActivity
 import com.example.appinterface.activitys.activityUsuarios.EditarPerfilActivity
 import com.example.appinterface.activitys.activityUsuarios.LoginActivity
 import com.example.appinterface.fragments.AfiliadosFragment
+import com.example.appinterface.MainClienteActivity.SedesFragment
+import com.example.appinterface.MainClienteActivity.ServiciosFragment
+import com.example.appinterface.MainClienteActivity.TiendaFragment
+import com.example.appinterface.MainClienteActivity.PagosFragment
+import com.example.appinterface.MainClienteActivity.PerfilFragment
 import com.google.android.material.navigation.NavigationView
 
 class MainClienteActivity : AppCompatActivity() {
@@ -50,7 +55,6 @@ class MainClienteActivity : AppCompatActivity() {
 
         val navView = findViewById<NavigationView>(R.id.nav_view)
 
-
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, InicioFragment())
@@ -64,9 +68,10 @@ class MainClienteActivity : AppCompatActivity() {
                 .commit()
         }
 
+        // 🔥 CAMBIADO: SERVICIOS → SEDES
         findViewById<LinearLayout>(R.id.nav_servicios).setOnClickListener {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, ServiciosFragment())
+                .replace(R.id.fragmentContainer, SedesFragment())
                 .addToBackStack(null)
                 .commit()
         }
@@ -160,8 +165,12 @@ class MainClienteActivity : AppCompatActivity() {
             cerrarDrawer()
         }
 
+
         btnSedes.setOnClickListener {
-            toast("Sedes próximamente")
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, SedesFragment())
+                .addToBackStack(null)
+                .commit()
             cerrarDrawer()
         }
 

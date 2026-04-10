@@ -22,4 +22,8 @@ interface CarritoApiService {
         @Path("usuarioId") usuarioId: Int,
         @Path("metodo") metodo: String
     ): Call<Map<String, String>>
+    @GET("api/carrito/historial/{usuarioId}")
+    fun historial(
+        @Path("usuarioId") usuarioId: Int
+    ): Call<List<Map<String, Any>>>
 }
