@@ -42,7 +42,7 @@ class ServiciosActivity : AppCompatActivity() {
 
                         val lista = response.body()!!
 
-                        // 🔥 AQUÍ ESTÁ LA CORRECCIÓN
+
                         recyclerView.adapter = ServicioAdapter(
                             lista,
 
@@ -80,7 +80,7 @@ class ServiciosActivity : AppCompatActivity() {
             })
     }
 
-    // 🔥 MÉTODO ELIMINAR
+
     private fun eliminarServicio(id: Int) {
 
         RetrofitInstance.apiServicios.eliminarServicio(id)

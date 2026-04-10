@@ -23,7 +23,7 @@ class SubcategoriaActivity : AppCompatActivity() {
         recycler.layoutManager = GridLayoutManager(this, 2)
         recycler.setHasFixedSize(true)
 
-        // 🔥 ESPACIADO PRO
+
         recycler.addItemDecoration(
             GridSpacingItemDecoration(2, 30, true)
         )

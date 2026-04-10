@@ -26,20 +26,9 @@
 
         </activity>
         <activity android:name=".activitys.activityUsuarios.EditarPerfilActivity"/>
-
-
         <activity android:name=".activitys.activityUsuarios.RegistroActivity"/>
-
-
-        <activity android:name=".activitys.MainActivity"/>
-
-
         <activity android:name=".MainClienteActivity.MainClienteActivity"/>
-
         <activity android:name=".activitys.ServiciosActivity"/>
-
-
-        <activity android:name=".activitys.activityContrato.ProductosActivity"/>
         <activity android:name=".activitys.activityContrato.BuscarContratoActivity"/>
         <activity android:name=".activitys.activityContrato.CrearContratoActivity"/>
         <activity android:name=".activitys.activityContrato.ActualizarContratoActivity"/>
@@ -51,6 +40,7 @@
         <activity android:name=".activitys.tiendaActivity.CarritoActivity"/>
         <activity android:name=".activitys.tiendaActivity.SubcategoriaActivity"/>
         <activity android:name=".activitys.tiendaActivity.ProductoActivity"/>
+        <activity android:name=".activitys.ActivityPago.PagoCarritoActivity"/>
         <provider
                 android:name="androidx.core.content.FileProvider"
                 android:authorities="${applicationId}.provider"

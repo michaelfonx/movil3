@@ -95,10 +95,11 @@ class LoginActivity : AppCompatActivity() {
                             val sharedPref = getSharedPreferences("APP_PREFS", MODE_PRIVATE)
 
                             val clienteId = data.cliente_id ?: 0
+                            val usuarioId = data.usuario_id ?: 0
 
-                            println("🔥 CLIENTE_ID GUARDADO: $clienteId")
+                            println(" CLIENTE_ID GUARDADO: $clienteId")
 
-                            // 🔴 VALIDACIÓN CLAVE
+
                             if (clienteId <= 0) {
                                 Toast.makeText(
                                     this@LoginActivity,
@@ -112,13 +113,15 @@ class LoginActivity : AppCompatActivity() {
                                 .putString("TOKEN", data.token)
                                 .putString("ROL", data.rol)
                                 .putInt("ID", clienteId)
+                                .putInt("USUARIO_ID", usuarioId)
                                 .putString("NOMBRE", data.usuario_primer_nombre)
                                 .putString("APELLIDO", data.usuario_primer_apellido)
                                 .putString("CORREO", data.usuario_correo)
                                 .apply()
+                            println("🔥 USUARIO_ID GUARDADO: $usuarioId")
 
-                            // 🔥 CORRECCIÓN DEL ROL
-                            when (data.rol.uppercase()) {
+
+                            when (data.rol?.uppercase()) {
 
                                 "CLIENTE" -> {
                                     startActivity(
@@ -178,7 +181,7 @@ class LoginActivity : AppCompatActivity() {
                             Toast.LENGTH_LONG
                         ).show()
 
-                        println("🔥 ERROR LOGIN: ${t.message}")
+                        println(" ERROR LOGIN: ${t.message}")
                     }
                 })
         }

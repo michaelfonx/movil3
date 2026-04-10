@@ -1,0 +1,81 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:padding="24dp"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#F3EEF7">
+
+    <TextView
+            android:id="@+id/txtTitulo"
+            android:text="Pago"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#5E35B1"
+            android:layout_marginBottom="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:id="@+id/txtSub"
+            android:text="Selecciona tu método de pago"
+            android:textSize="14sp"
+            android:textColor="#777"
+            android:layout_marginBottom="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:id="@+id/txtTotalPago"
+            android:text="Total"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#333"
+            android:layout_marginBottom="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <Button
+            android:id="@+id/btnPse"
+            android:text="Pagar con PSE"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:backgroundTint="#7B1FA2"
+            android:textColor="#FFF"/>
+
+    <Button
+            android:id="@+id/btnCredito"
+            android:text="Pagar con Crédito"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:backgroundTint="#7B1FA2"
+            android:textColor="#FFF"/>
+
+    <Button
+            android:id="@+id/btnDebito"
+            android:text="Pagar con Débito"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:backgroundTint="#7B1FA2"
+            android:textColor="#FFF"/>
+
+    <Button
+            android:id="@+id/btnEfectivo"
+            android:text="Pagar en Efectivo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="#9E9E9E"
+            android:textColor="#FFF"/>
+
+    <Button
+            android:id="@+id/btnConfirmar"
+            android:text="Pago ya realizado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#43A047"
+            android:textColor="#FFF"/>
+
+</LinearLayout>

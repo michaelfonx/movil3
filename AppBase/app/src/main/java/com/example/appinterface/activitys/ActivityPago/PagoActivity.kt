@@ -84,7 +84,7 @@ class PagoActivity : AppCompatActivity() {
 
         val metodoSeleccionado = spinnerMetodo.selectedItem.toString()
 
-        // VALIDACIONES
+
         if (metodoSeleccionado == "CREDITO" || metodoSeleccionado == "DEBITO") {
 
             val numero = findViewById<EditText>(R.id.etNumero).text.toString()

@@ -50,7 +50,7 @@ class MainClienteActivity : AppCompatActivity() {
 
         val navView = findViewById<NavigationView>(R.id.nav_view)
 
-        // Fragment inicial (SIN backstack)
+
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, InicioFragment())

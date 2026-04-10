@@ -36,7 +36,7 @@ class AfiliadosFragment : Fragment(R.layout.fragment_afiliados) {
         val btnBuscar = view.findViewById<Button>(R.id.btnAgregarAfiliado)
         val input = view.findViewById<EditText>(R.id.inputUsuarioId)
 
-        // 🔥 AHORA ES BUSCAR, NO AGREGAR DIRECTO
+
         btnBuscar.setOnClickListener {
 
             val documento = input.text.toString().toIntOrNull()
@@ -50,7 +50,7 @@ class AfiliadosFragment : Fragment(R.layout.fragment_afiliados) {
         }
     }
 
-    // 🔥 CARGAR AFILIADOS (CARDS)
+
     private fun cargarAfiliados(view: View) {
 
         val layout = view.findViewById<LinearLayout>(R.id.layoutAfiliados)

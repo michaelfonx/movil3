@@ -49,7 +49,7 @@ class ActualizarContratoActivity : AppCompatActivity() {
                 })
         }
 
-        // BOTON VOLVER
+
         findViewById<Button>(R.id.btnVolver).setOnClickListener {
             finish()
         }

@@ -7,9 +7,13 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appinterface.R
-import com.example.appinterface.manager.CarritoManager
+import com.example.appinterface.Api.RetrofitInstance
 import com.example.appinterface.model.Producto
+import com.example.appinterface.model.Carrito
 import com.example.appinterface.model.DetalleProductoActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ProductoAdapter(private val lista: List<Producto>) :
     RecyclerView.Adapter<ProductoAdapter.ViewHolder>() {
@@ -36,9 +40,7 @@ class ProductoAdapter(private val lista: List<Producto>) :
         holder.txtNombre.text = item.producto_nombre
         holder.txtPrecio.text = "$ ${item.producto_precio}"
 
-        val nombre = item.producto_nombre
-            .trim()
-            .lowercase()
+        val nombre = item.producto_nombre.trim().lowercase()
 
         val imagen = when {
             nombre.contains("ataud") -> R.drawable.cat_ataudes
@@ -51,12 +53,50 @@ class ProductoAdapter(private val lista: List<Producto>) :
         holder.img.setImageResource(imagen)
 
         holder.btnAgregar.setOnClickListener {
-            CarritoManager.agregar(item)
-            Toast.makeText(
-                holder.itemView.context,
-                "Agregado al carrito 🛒",
-                Toast.LENGTH_SHORT
-            ).show()
+
+            val context = holder.itemView.context
+            val sharedPref = context.getSharedPreferences("APP_PREFS", 0)
+
+            val usuarioId = sharedPref.getInt("USUARIO_ID", 0)
+
+            if (usuarioId == 0) {
+                Toast.makeText(context, "Debe iniciar sesión", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val carrito = Carrito(
+                usuario_id = usuarioId,
+                producto_id = item.producto_id,
+                cantidad = 1,
+                precio_unitario = item.producto_precio
+            )
+
+            RetrofitInstance.carritoApi.agregar(carrito)
+                .enqueue(object : Callback<String> {
+
+                    override fun onResponse(
+                        call: Call<String>,
+                        response: Response<String>
+                    ) {
+
+                        Toast.makeText(
+                            context,
+                            "Agregado al carrito 🛒",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                    override fun onFailure(call: Call<String>, t: Throwable) {
+
+                        Toast.makeText(
+                            context,
+                            "Agregado al carrito 🛒",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                        println("ERROR RETROFIT: ${t.message}")
+                    }
+                })
         }
 
         holder.itemView.setOnClickListener {
