@@ -68,7 +68,6 @@ class MainClienteActivity : AppCompatActivity() {
                 .commit()
         }
 
-        // 🔥 CAMBIADO: SERVICIOS → SEDES
         findViewById<LinearLayout>(R.id.nav_servicios).setOnClickListener {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, SedesFragment())
@@ -175,7 +174,17 @@ class MainClienteActivity : AppCompatActivity() {
         }
 
         btnAsesor.setOnClickListener {
-            toast("Asesor próximamente")
+
+            val numero = "573196271245"
+            val mensaje = "Hola, necesito asesoría"
+
+            val url = "https://wa.me/$numero?text=${java.net.URLEncoder.encode(mensaje, "UTF-8")}"
+
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
+
+            startActivity(intent)
+
             cerrarDrawer()
         }
 

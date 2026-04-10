@@ -116,7 +116,7 @@
             <TextView
                     android:id="@+id/nav_asesor"
                     style="@style/menuItem"
-                    android:text="Asesor Virtual"/>
+                    android:text="Contactanos"/>
             <View style="@style/divider"/>
 
             <TextView
