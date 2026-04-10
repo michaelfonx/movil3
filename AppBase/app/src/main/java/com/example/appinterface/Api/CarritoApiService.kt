@@ -17,11 +17,13 @@ interface CarritoApiService {
         @Path("usuarioId") usuarioId: Int,
         @Path("productoId") productoId: Int
     ): Call<String>
+
     @POST("api/carrito/confirmar-pago/{usuarioId}/{metodo}")
     fun confirmarPago(
         @Path("usuarioId") usuarioId: Int,
         @Path("metodo") metodo: String
     ): Call<Map<String, String>>
+
     @GET("api/carrito/historial/{usuarioId}")
     fun historial(
         @Path("usuarioId") usuarioId: Int

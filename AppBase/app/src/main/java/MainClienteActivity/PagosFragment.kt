@@ -1,8 +1,7 @@
 package com.example.appinterface.MainClienteActivity
 
-import MainClienteActivity.PagoAdapter
 import android.os.Bundle
-import android.view.*
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -10,6 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appinterface.Api.RetrofitInstance
 import com.example.appinterface.R
+import com.example.appinterface.Adapter.PagoAdapter
+import com.example.appinterface.model.Pago
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,7 +25,7 @@ class PagosFragment : Fragment(R.layout.fragment_pagos) {
         val sharedPref = requireContext()
             .getSharedPreferences("APP_PREFS", AppCompatActivity.MODE_PRIVATE)
 
-        val usuarioId = sharedPref.getInt("ID", 0)
+        val usuarioId = sharedPref.getInt("USUARIO_ID", 0)
 
         if (usuarioId == 0) {
             Toast.makeText(requireContext(), "Debe iniciar sesión", Toast.LENGTH_SHORT).show()
@@ -41,9 +42,24 @@ class PagosFragment : Fragment(R.layout.fragment_pagos) {
 
                     if (response.isSuccessful) {
 
-                        val lista = response.body() ?: emptyList()
+                        val listaMap = response.body() ?: emptyList()
 
-                        recycler.adapter = PagoAdapter(lista)
+                        val listaPagos = listaMap.map {
+
+                            val pagoId = (it["pago_id"] as? Double)?.toInt() ?: 0
+                            val metodo = it["pago_metodo"]?.toString() ?: ""
+                            val fecha = it["pago_fecha"]?.toString() ?: ""
+                            val contratoId = (it["contrato_id"] as? Double)?.toInt() ?: 0
+
+                            Pago(
+                                pago_id = pagoId,
+                                pago_metodo = metodo,
+                                pago_fecha = fecha,
+                                contrato_id = contratoId
+                            )
+                        }
+
+                        recycler.adapter = PagoAdapter(listaPagos)
                     }
                 }
 

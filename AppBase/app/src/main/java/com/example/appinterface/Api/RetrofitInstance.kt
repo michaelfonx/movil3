@@ -68,4 +68,7 @@ object RetrofitInstance {
     val afiliadoApi: AfiliadoApiService by lazy {
         retrofit.create(AfiliadoApiService::class.java)
     }
+    val contratoApi: ContratoApiService by lazy {
+        retrofit.create(ContratoApiService::class.java)
+    }
 }

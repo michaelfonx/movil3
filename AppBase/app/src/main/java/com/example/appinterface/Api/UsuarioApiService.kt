@@ -40,4 +40,8 @@ interface UsuarioApiService {
     fun buscarPorDocumento(
         @Path("doc") doc: Int
     ): Call<Usuario>
+    @GET("api/usuarios/{id}")
+    fun obtenerUsuarioPorId(
+        @Path("id") id: Int
+    ): Call<Usuario>
 }

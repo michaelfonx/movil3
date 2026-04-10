@@ -14,6 +14,7 @@ class PagoAdapter(private val lista: List<Pago>) :
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val txtMetodo: TextView = view.findViewById(R.id.txtMetodo)
         val txtFecha: TextView = view.findViewById(R.id.txtFecha)
+        val txtTotal: TextView = view.findViewById(R.id.txtTotal)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -22,11 +23,12 @@ class PagoAdapter(private val lista: List<Pago>) :
         return ViewHolder(view)
     }
 
+    override fun getItemCount() = lista.size
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val pago = lista[position]
-        holder.txtMetodo.text = " ${pago.pago_metodo}"
-        holder.txtFecha.text = " ${pago.pago_fecha}"
+        holder.txtMetodo.text = pago.pago_metodo
+        holder.txtFecha.text = pago.pago_fecha
+        holder.txtTotal.text = "Contrato: ${pago.contrato_id}"
     }
-
-    override fun getItemCount() = lista.size
 }

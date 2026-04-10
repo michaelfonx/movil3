@@ -24,18 +24,49 @@ class AfiliadosFragment : Fragment(R.layout.fragment_afiliados) {
         val prefs = requireActivity()
             .getSharedPreferences("APP_PREFS", Context.MODE_PRIVATE)
 
-        contratoId = prefs.getInt("CONTRATO_ID", 0)
+        val clienteId = prefs.getInt("ID", 0)
 
-        if (contratoId == 0) {
-            Toast.makeText(context, "Error: contrato no válido", Toast.LENGTH_LONG).show()
+        if (clienteId == 0) {
+            Toast.makeText(context, "Error usuario", Toast.LENGTH_LONG).show()
             return
         }
 
-        cargarAfiliados(view)
+        RetrofitInstance.contratoApi.obtenerMiPlan(clienteId)
+            .enqueue(object : Callback<Map<String, Any>> {
+
+                override fun onResponse(
+                    call: Call<Map<String, Any>>,
+                    response: Response<Map<String, Any>>
+                ) {
+
+                    val data = response.body()
+
+                    if (!response.isSuccessful || data == null) {
+                        Toast.makeText(context, "No tienes contrato", Toast.LENGTH_LONG).show()
+                        return
+                    }
+
+                    contratoId = when (val value = data["contrato_id"]) {
+                        is Double -> value.toInt()
+                        is Int -> value
+                        else -> 0
+                    }
+
+                    if (contratoId == 0) {
+                        Toast.makeText(context, "Contrato no válido", Toast.LENGTH_LONG).show()
+                        return
+                    }
+
+                    cargarAfiliados(view)
+                }
+
+                override fun onFailure(call: Call<Map<String, Any>>, t: Throwable) {
+                    Toast.makeText(context, "Error conexión", Toast.LENGTH_LONG).show()
+                }
+            })
 
         val btnBuscar = view.findViewById<Button>(R.id.btnAgregarAfiliado)
         val input = view.findViewById<EditText>(R.id.inputUsuarioId)
-
 
         btnBuscar.setOnClickListener {
 
@@ -50,7 +81,6 @@ class AfiliadosFragment : Fragment(R.layout.fragment_afiliados) {
         }
     }
 
-
     private fun cargarAfiliados(view: View) {
 
         val layout = view.findViewById<LinearLayout>(R.id.layoutAfiliados)
@@ -64,11 +94,6 @@ class AfiliadosFragment : Fragment(R.layout.fragment_afiliados) {
                 ) {
 
                     layout.removeAllViews()
-
-                    if (!response.isSuccessful) {
-                        Toast.makeText(context, "Error HTTP: ${response.code()}", Toast.LENGTH_SHORT).show()
-                        return
-                    }
 
                     val lista = response.body() ?: emptyList()
 
@@ -94,11 +119,10 @@ class AfiliadosFragment : Fragment(R.layout.fragment_afiliados) {
                 }
 
                 override fun onFailure(call: Call<List<AfiliadoDTO>>, t: Throwable) {
-                    Toast.makeText(context, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Error cargando afiliados", Toast.LENGTH_SHORT).show()
                 }
             })
     }
-
 
     private fun buscarUsuario(documento: Int, view: View) {
 
@@ -109,12 +133,12 @@ class AfiliadosFragment : Fragment(R.layout.fragment_afiliados) {
 
                 override fun onResponse(call: Call<Usuario>, response: Response<Usuario>) {
 
-                    if (!response.isSuccessful || response.body() == null) {
+                    val usuario = response.body()
+
+                    if (!response.isSuccessful || usuario == null) {
                         Toast.makeText(context, "Usuario no encontrado", Toast.LENGTH_SHORT).show()
                         return
                     }
-
-                    val usuario = response.body()!!
 
                     layout.removeAllViews()
 
@@ -129,8 +153,6 @@ class AfiliadosFragment : Fragment(R.layout.fragment_afiliados) {
 
                     val btnAgregar = Button(requireContext())
                     btnAgregar.text = "Agregar afiliado"
-                    btnAgregar.setBackgroundTintList(resources.getColorStateList(R.color.purple_700))
-                    btnAgregar.setTextColor(resources.getColor(android.R.color.white))
 
                     btnAgregar.setOnClickListener {
                         agregarAfiliadoPorDocumento(usuario.usuario_documento, view)
@@ -143,11 +165,10 @@ class AfiliadosFragment : Fragment(R.layout.fragment_afiliados) {
                 }
 
                 override fun onFailure(call: Call<Usuario>, t: Throwable) {
-                    Toast.makeText(context, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Error conexión", Toast.LENGTH_SHORT).show()
                 }
             })
     }
-
 
     private fun agregarAfiliadoPorDocumento(documento: Int, view: View) {
 
@@ -171,12 +192,11 @@ class AfiliadosFragment : Fragment(R.layout.fragment_afiliados) {
 
                     Toast.makeText(context, mensaje, Toast.LENGTH_LONG).show()
 
-
                     cargarAfiliados(view)
                 }
 
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    Toast.makeText(context, "Error: ${t.message}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "Error conexión", Toast.LENGTH_LONG).show()
                 }
             })
     }

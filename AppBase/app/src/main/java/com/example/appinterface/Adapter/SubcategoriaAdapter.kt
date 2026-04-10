@@ -37,14 +37,9 @@ class SubcategoriaAdapter(
 
         val nombre = item.subcategoria_nombre.trim().lowercase()
 
-        val imagen = when {
-            nombre.contains("grande") -> R.drawable.cat_ataudes
-            nombre.contains("mediano") -> R.drawable.cat_urnas
-            nombre.contains("peque") -> R.drawable.cat_flores
-            else -> R.drawable.logo
-        }
-
+        val imagen = R.drawable.img_default
         holder.imgSubcategoria.setImageResource(imagen)
+        
 
 
         holder.itemView.setOnClickListener {

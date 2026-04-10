@@ -33,11 +33,6 @@ interface ContratoApiService {
         @Body contratoPlan: ContratoPlan
     ): Call<String>
 
-    @GET("api/contrato-plan/mi-plan/{clienteId}")
-    fun obtenerMiPlan(
-        @Path("clienteId") clienteId: Int
-    ): Call<MiPlanDTO>
-
     @POST("api/adquirir-plan")
     fun adquirirPlan(
         @Body body: AdquirirPlanRequest
@@ -60,4 +55,15 @@ interface ContratoApiService {
     fun agregarProductoContrato(
         @Body body: Map<String, Int>
     ): Call<Map<String, String>>
+
+    @GET("api/carrito/{usuarioId}")
+    fun obtenerCarrito(
+        @Path("usuarioId") usuarioId: Int
+    ): Call<List<Map<String, Any>>>
+
+    @GET("api/mi-plan/{clienteId}")
+    fun obtenerMiPlan(
+        @Path("clienteId") clienteId: Int
+    ): Call<Map<String, Any>>
+
 }

@@ -5,59 +5,55 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <!-- 🖼️ Imagen (por ahora fija) -->
     <ImageView
+            android:id="@+id/imgProducto"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:src="@drawable/logo"
-            android:scaleType="centerCrop"/>
+            android:layout_height="220dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_default"/>
 
-    <!-- 🧾 Nombre -->
     <TextView
             android:id="@+id/txtNombre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="10dp"/>
 
-    <!-- 📝 Descripción -->
     <TextView
             android:id="@+id/txtDescripcion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"/>
+            android:layout_marginTop="6dp"
+            android:textSize="14sp"/>
 
-    <!-- 💰 Precio -->
     <TextView
             android:id="@+id/txtPrecio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#7B2CBF"
-            android:textSize="16sp"
-            android:layout_marginTop="6dp"/>
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"/>
 
-    <!-- 📦 Stock -->
     <TextView
             android:id="@+id/txtStock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"/>
 
-    <!-- 🛒 Botón carrito -->
     <Button
             android:id="@+id/btnCarrito"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Agregar al carrito"
-            android:layout_marginTop="12dp"/>
+            android:layout_marginTop="16dp"/>
 
-    <!-- 📑 Botón contrato -->
     <Button
             android:id="@+id/btnContrato"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Agregar al contrato"
-            android:layout_marginTop="6dp"/>
+            android:layout_marginTop="8dp"/>
 
 </LinearLayout>

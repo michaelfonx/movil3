@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.appinterface.R
 import com.example.appinterface.Api.RetrofitInstance
 import com.example.appinterface.manager.CarritoManager
-import model.DTO.MiPlanDTO
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -50,14 +49,17 @@ class DetalleProductoActivity : AppCompatActivity() {
             }
 
             RetrofitInstance.api.obtenerMiPlan(clienteId)
-                .enqueue(object : Callback<MiPlanDTO> {
+                .enqueue(object : Callback<Map<String, Any>> {
 
                     override fun onResponse(
-                        call: Call<MiPlanDTO>,
-                        response: Response<MiPlanDTO>
+                        call: Call<Map<String, Any>>,
+                        response: Response<Map<String, Any>>
                     ) {
 
-                        val contratoId = response.body()?.contrato_id ?: 0
+                        val data = response.body()
+
+                        val contratoId =
+                            (data?.get("contrato_id") as? Double)?.toInt() ?: 0
 
                         if (contratoId == 0) {
                             Toast.makeText(
@@ -80,6 +82,7 @@ class DetalleProductoActivity : AppCompatActivity() {
                                     call: Call<Map<String, String>>,
                                     response: Response<Map<String, String>>
                                 ) {
+
                                     if (response.isSuccessful) {
 
                                         val mensaje = response.body()?.get("mensaje")
@@ -92,9 +95,10 @@ class DetalleProductoActivity : AppCompatActivity() {
                                         ).show()
 
                                     } else {
+
                                         Toast.makeText(
                                             this@DetalleProductoActivity,
-                                            "Error servidor: ${response.code()}",
+                                            "Error servidor",
                                             Toast.LENGTH_SHORT
                                         ).show()
                                     }
@@ -104,9 +108,10 @@ class DetalleProductoActivity : AppCompatActivity() {
                                     call: Call<Map<String, String>>,
                                     t: Throwable
                                 ) {
+
                                     Toast.makeText(
                                         this@DetalleProductoActivity,
-                                        "Error: ${t.message}",
+                                        "Error de conexión",
                                         Toast.LENGTH_LONG
                                     ).show()
                                 }
@@ -114,9 +119,10 @@ class DetalleProductoActivity : AppCompatActivity() {
                     }
 
                     override fun onFailure(
-                        call: Call<MiPlanDTO>,
+                        call: Call<Map<String, Any>>,
                         t: Throwable
                     ) {
+
                         Toast.makeText(
                             this@DetalleProductoActivity,
                             "Error obteniendo contrato",

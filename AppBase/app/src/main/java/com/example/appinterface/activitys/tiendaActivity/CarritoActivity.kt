@@ -30,6 +30,7 @@ class CarritoActivity : AppCompatActivity() {
 
         val sharedPref = getSharedPreferences("APP_PREFS", MODE_PRIVATE)
         val usuarioId = sharedPref.getInt("USUARIO_ID", 0)
+
         if (usuarioId == 0) {
             Toast.makeText(this, "Debe iniciar sesión", Toast.LENGTH_SHORT).show()
             return
@@ -44,28 +45,23 @@ class CarritoActivity : AppCompatActivity() {
                 ) {
                     if (response.isSuccessful) {
 
-                        val lista = response.body() ?: emptyList()
+                        val lista = (response.body() ?: emptyList()).toMutableList()
 
-                        recycler.adapter = CarritoAdapter(  lista)
+                        val adapter = CarritoAdapter(lista) { total ->
+                            txtTotal.text = "Total: $ $total"
+                        }
 
-                        val total = lista.sumOf { it.precio_unitario * it.cantidad }
-                        txtTotal.text = "Total: $ $total"
+                        recycler.adapter = adapter
 
                         btnPagar.setOnClickListener {
-
                             val intent = Intent(this@CarritoActivity, PagoCarritoActivity::class.java)
-                            intent.putExtra("TOTAL", total)
                             startActivity(intent)
                         }
                     }
                 }
 
                 override fun onFailure(call: Call<List<Carrito>>, t: Throwable) {
-                    Toast.makeText(
-                        this@CarritoActivity,
-                        "Error de conexión",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(this@CarritoActivity, "Error de conexión", Toast.LENGTH_SHORT).show()
                 }
             })
     }

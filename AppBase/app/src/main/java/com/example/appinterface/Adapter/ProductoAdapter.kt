@@ -40,17 +40,7 @@ class ProductoAdapter(private val lista: List<Producto>) :
         holder.txtNombre.text = item.producto_nombre
         holder.txtPrecio.text = "$ ${item.producto_precio}"
 
-        val nombre = item.producto_nombre.trim().lowercase()
-
-        val imagen = when {
-            nombre.contains("ataud") -> R.drawable.cat_ataudes
-            nombre.contains("urna") -> R.drawable.cat_urnas
-            nombre.contains("flor") -> R.drawable.cat_flores
-            nombre.contains("lapida") -> R.drawable.cat_lapidas
-            else -> R.drawable.img_default
-        }
-
-        holder.img.setImageResource(imagen)
+        holder.img.setImageResource(R.drawable.img_default)
 
         holder.btnAgregar.setOnClickListener {
 
@@ -78,7 +68,6 @@ class ProductoAdapter(private val lista: List<Producto>) :
                         call: Call<String>,
                         response: Response<String>
                     ) {
-
                         Toast.makeText(
                             context,
                             "Agregado al carrito 🛒",
@@ -87,14 +76,11 @@ class ProductoAdapter(private val lista: List<Producto>) :
                     }
 
                     override fun onFailure(call: Call<String>, t: Throwable) {
-
                         Toast.makeText(
                             context,
                             "Agregado al carrito 🛒",
                             Toast.LENGTH_SHORT
                         ).show()
-
-                        println("ERROR RETROFIT: ${t.message}")
                     }
                 })
         }
