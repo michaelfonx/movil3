@@ -118,7 +118,7 @@ class LoginActivity : AppCompatActivity() {
                                 .putString("APELLIDO", data.usuario_primer_apellido)
                                 .putString("CORREO", data.usuario_correo)
                                 .apply()
-                            println("🔥 USUARIO_ID GUARDADO: $usuarioId")
+                            println(" USUARIO_ID GUARDADO: $usuarioId")
 
 
                             when (data.rol?.uppercase()) {

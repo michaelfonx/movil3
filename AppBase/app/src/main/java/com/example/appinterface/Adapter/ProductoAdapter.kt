@@ -70,7 +70,7 @@ class ProductoAdapter(private val lista: List<Producto>) :
                     ) {
                         Toast.makeText(
                             context,
-                            "Agregado al carrito 🛒",
+                            "Agregado al carrito ",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -78,7 +78,7 @@ class ProductoAdapter(private val lista: List<Producto>) :
                     override fun onFailure(call: Call<String>, t: Throwable) {
                         Toast.makeText(
                             context,
-                            "Agregado al carrito 🛒",
+                            "Agregado al carrito ",
                             Toast.LENGTH_SHORT
                         ).show()
                     }

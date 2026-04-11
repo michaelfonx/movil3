@@ -88,7 +88,7 @@
 
 
                 <EditText
-                        android:id="@+id/txtDocumento"
+                        android:id="@+id/txtCelular"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:hint="  Celular"
@@ -115,7 +115,6 @@
                         android:background="@drawable/input_olivos"
                         android:layout_marginTop="8dp"/>
 
-                <!-- BOTÓN -->
                 <Button
                         android:id="@+id/btnRegistrar"
                         android:layout_width="match_parent"

@@ -147,7 +147,7 @@ class PagoActivity : AppCompatActivity() {
 
         if (!aprobado) {
             btn.isEnabled = true
-            Toast.makeText(this, "Pago rechazado ❌", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Pago rechazado ", Toast.LENGTH_LONG).show()
             return
         }
 

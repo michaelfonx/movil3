@@ -55,7 +55,7 @@ class RegistroActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            val documentoInt = documento.text.toString().toInt()
+            val documentoLong = documento.text.toString().toLong()
             val fechaFormateada = fechaNacimiento.text.toString().replace("/", "-")
 
             val usuario = Usuario(
@@ -64,7 +64,7 @@ class RegistroActivity : AppCompatActivity() {
                 segundoNombre.text.toString(),
                 primerApellido.text.toString(),
                 segundoApellido.text.toString(),
-                documentoInt,
+                documentoLong,
                 correoText,
                 direccion.text.toString(),
                 passwordText,
@@ -77,7 +77,10 @@ class RegistroActivity : AppCompatActivity() {
             RetrofitInstance.usuarioApi.registrarUsuario(usuario)
                 .enqueue(object : Callback<Map<String, String>> {
 
-                    override fun onResponse(call: Call<Map<String, String>>, response: Response<Map<String, String>>) {
+                    override fun onResponse(
+                        call: Call<Map<String, String>>,
+                        response: Response<Map<String, String>>
+                    ) {
 
                         if (response.isSuccessful) {
 
