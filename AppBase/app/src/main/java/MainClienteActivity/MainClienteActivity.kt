@@ -1,7 +1,5 @@
 package com.example.appinterface.MainClienteActivity
 
-import MainClienteActivity.InicioFragment
-import MainClienteActivity.TuPlanFragment
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri

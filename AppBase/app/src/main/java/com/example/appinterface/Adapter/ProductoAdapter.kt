@@ -56,7 +56,7 @@ class ProductoAdapter(private val lista: List<Producto>) :
 
             val carrito = Carrito(
                 usuario_id = usuarioId,
-                producto_id = item.producto_id,
+                producto_id = item.producto_id!!,
                 cantidad = 1,
                 precio_unitario = item.producto_precio
             )

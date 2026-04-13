@@ -17,7 +17,7 @@ class CarritoAdapter(
     private val onTotalChange: (Double) -> Unit
 ) : RecyclerView.Adapter<CarritoAdapter.ViewHolder>() {
 
-    private val seleccionados = mutableSetOf<Int>()
+    private val seleccionados = lista.mapNotNull { it.carrito_id ?: it.producto_id }.toMutableSet()
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val txtProducto: TextView = view.findViewById(R.id.txtProducto)
@@ -40,55 +40,114 @@ class CarritoAdapter(
     override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
 
         val item = lista[position]
+        val itemId = item.carrito_id ?: item.producto_id
 
-        holder.txtProducto.text = "Producto #${item.producto_id}"
+        holder.txtProducto.text = item.producto_nombre?.takeIf { it.isNotBlank() }
+            ?: "Producto #${item.producto_id}"
         holder.txtCantidad.text = item.cantidad.toString()
         holder.txtPrecio.text = "$ ${item.precio_unitario * item.cantidad}"
 
         holder.btnMas.setOnClickListener {
-            val nuevaCantidad = item.cantidad + 1
-            lista[position] = item.copy(cantidad = nuevaCantidad)
-            notifyItemChanged(position)
-            calcularTotal()
+            RetrofitInstance.carritoApi.agregar(
+                Carrito(
+                    carrito_id = item.carrito_id,
+                    usuario_id = item.usuario_id,
+                    producto_id = item.producto_id,
+                    cantidad = 1,
+                    precio_unitario = item.precio_unitario
+                )
+            ).enqueue(object : Callback<String> {
+                override fun onResponse(call: Call<String>, response: Response<String>) {
+                    if (response.isSuccessful) {
+                        val nuevaCantidad = item.cantidad + 1
+                        lista[position] = item.copy(cantidad = nuevaCantidad)
+                        notifyItemChanged(position)
+                        calcularTotal()
+                    }
+                }
+
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    Toast.makeText(holder.itemView.context, "Error al actualizar cantidad", Toast.LENGTH_SHORT).show()
+                }
+            })
         }
 
         holder.btnMenos.setOnClickListener {
             if (item.cantidad > 1) {
-                val nuevaCantidad = item.cantidad - 1
-                lista[position] = item.copy(cantidad = nuevaCantidad)
-                notifyItemChanged(position)
-                calcularTotal()
+                RetrofitInstance.carritoApi.agregar(
+                    Carrito(
+                        carrito_id = item.carrito_id,
+                        usuario_id = item.usuario_id,
+                        producto_id = item.producto_id,
+                        cantidad = -1,
+                        precio_unitario = item.precio_unitario
+                    )
+                ).enqueue(object : Callback<String> {
+                    override fun onResponse(call: Call<String>, response: Response<String>) {
+                        if (response.isSuccessful) {
+                            val nuevaCantidad = item.cantidad - 1
+                            lista[position] = item.copy(cantidad = nuevaCantidad)
+                            notifyItemChanged(position)
+                            calcularTotal()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<String>, t: Throwable) {
+                        Toast.makeText(holder.itemView.context, "Error al actualizar cantidad", Toast.LENGTH_SHORT).show()
+                    }
+                })
+            } else {
+                val itemActual = item
+                val currentPosition = holder.bindingAdapterPosition
+                if (currentPosition == RecyclerView.NO_POSITION) return@setOnClickListener
+
+                RetrofitInstance.carritoApi.eliminar(
+                    itemActual.usuario_id,
+                    itemActual.producto_id
+                ).enqueue(object : Callback<String> {
+                    override fun onResponse(call: Call<String>, response: Response<String>) {
+                        lista.removeAt(currentPosition)
+                        seleccionados.remove(itemId)
+                        notifyItemRemoved(currentPosition)
+                        calcularTotal()
+                    }
+
+                    override fun onFailure(call: Call<String>, t: Throwable) {
+                        Toast.makeText(holder.itemView.context, "Error al eliminar producto", Toast.LENGTH_SHORT).show()
+                    }
+                })
             }
         }
 
         holder.btnEliminar.setOnClickListener {
-
-            val pos = holder.bindingAdapterPosition
-            if (pos == RecyclerView.NO_POSITION) return@setOnClickListener
-
-            val itemActual = lista[pos]
+            val currentPosition = holder.bindingAdapterPosition
+            if (currentPosition == RecyclerView.NO_POSITION) return@setOnClickListener
+            val itemActual = lista[currentPosition]
+            val itemActualId = itemActual.carrito_id ?: itemActual.producto_id
 
             RetrofitInstance.carritoApi.eliminar(
                 itemActual.usuario_id,
                 itemActual.producto_id
             ).enqueue(object : Callback<String> {
-
                 override fun onResponse(call: Call<String>, response: Response<String>) {
-                    lista.removeAt(pos)
-                    notifyDataSetChanged()
+                    lista.removeAt(currentPosition)
+                    seleccionados.remove(itemActualId)
+                    notifyItemRemoved(currentPosition)
                     calcularTotal()
                 }
 
-                override fun onFailure(call: Call<String>, t: Throwable) {}
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    Toast.makeText(holder.itemView.context, "Error al eliminar producto", Toast.LENGTH_SHORT).show()
+                }
             })
         }
 
         holder.check.setOnCheckedChangeListener(null)
-        holder.check.isChecked = seleccionados.contains(position)
+        holder.check.isChecked = seleccionados.contains(itemId)
 
         holder.check.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) seleccionados.add(position)
-            else seleccionados.remove(position)
+            if (isChecked) seleccionados.add(itemId)
+            else seleccionados.remove(itemId)
             calcularTotal()
         }
 

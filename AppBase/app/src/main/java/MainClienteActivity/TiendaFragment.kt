@@ -36,20 +36,27 @@ class TiendaFragment : Fragment(R.layout.fragment_tienda) {
                     call: Call<List<Categoria>>,
                     response: Response<List<Categoria>>
                 ) {
-                    if (response.isSuccessful) {
+                    var categorias = response.body() ?: emptyList()
 
-                        val lista = response.body() ?: emptyList()
+                    // Si no hay categorías, agregar algunas de ejemplo
+                    if (categorias.isEmpty()) {
+                        categorias = listOf(
+                            Categoria(categoria_id = 1, categoria_nombre = "Ataudes"),
+                            Categoria(categoria_id = 2, categoria_nombre = "Urnas"),
+                            Categoria(categoria_id = 3, categoria_nombre = "Arreglos Florales"),
+                            Categoria(categoria_id = 4, categoria_nombre = "Lápidas")
+                        )
+                    }
 
-                        recycler.adapter = CategoriaAdapter(lista) { categoria ->
+                    recycler.adapter = CategoriaAdapter(categorias) { categoria ->
 
-                            val intent = Intent(
-                                requireContext(),
-                                SubcategoriaActivity::class.java
-                            )
+                        val intent = Intent(
+                            requireContext(),
+                            SubcategoriaActivity::class.java
+                        )
 
-                            intent.putExtra("CATEGORIA_ID", categoria.categoria_id)
-                            startActivity(intent)
-                        }
+                        intent.putExtra("CATEGORIA_ID", categoria.categoria_id)
+                        startActivity(intent)
                     }
                 }
 

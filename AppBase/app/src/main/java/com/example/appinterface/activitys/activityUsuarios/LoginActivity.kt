@@ -10,9 +10,9 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.appinterface.Api.RetrofitInstance
 import com.example.appinterface.R
-import com.example.appinterface.activitys.admin.AdminActivity
-import com.example.appinterface.activitys.asesor.AsesorActivity
+import com.example.appinterface.activitys.rolesActivity.AsesorActivity
 import com.example.appinterface.MainClienteActivity.MainClienteActivity
+import com.example.appinterface.MainAdminActivity.MainAdminActivity
 import com.example.appinterface.model.LoginRequest
 import com.example.appinterface.model.LoginResponse
 import retrofit2.Call
@@ -96,14 +96,19 @@ class LoginActivity : AppCompatActivity() {
 
                             val clienteId = data.cliente_id ?: 0
                             val usuarioId = data.usuario_id ?: 0
+                            val rol = data.rol?.trim()?.uppercase()
+                            val principalId = if (rol == "CLIENTE") {
+                                if (clienteId > 0) clienteId else usuarioId
+                            } else {
+                                usuarioId
+                            }
 
-                            println(" CLIENTE_ID GUARDADO: $clienteId")
+                            println(" ID GUARDADO: $principalId")
 
-
-                            if (clienteId <= 0) {
+                            if (principalId <= 0) {
                                 Toast.makeText(
                                     this@LoginActivity,
-                                    "Error: usuario sin cliente asociado",
+                                    "Error: usuario sin identificación válida",
                                     Toast.LENGTH_LONG
                                 ).show()
                                 return
@@ -111,8 +116,8 @@ class LoginActivity : AppCompatActivity() {
 
                             sharedPref.edit()
                                 .putString("TOKEN", data.token)
-                                .putString("ROL", data.rol)
-                                .putInt("ID", clienteId)
+                                .putString("ROL", rol)
+                                .putInt("ID", principalId)
                                 .putInt("USUARIO_ID", usuarioId)
                                 .putString("NOMBRE", data.usuario_primer_nombre)
                                 .putString("APELLIDO", data.usuario_primer_apellido)
@@ -121,7 +126,7 @@ class LoginActivity : AppCompatActivity() {
                             println(" USUARIO_ID GUARDADO: $usuarioId")
 
 
-                            when (data.rol?.uppercase()) {
+                            when (rol) {
 
                                 "CLIENTE" -> {
                                     startActivity(
@@ -145,7 +150,7 @@ class LoginActivity : AppCompatActivity() {
                                     startActivity(
                                         Intent(
                                             this@LoginActivity,
-                                            AdminActivity::class.java
+                                            MainAdminActivity::class.java
                                         )
                                     )
                                 }

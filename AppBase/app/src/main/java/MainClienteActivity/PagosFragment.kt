@@ -59,7 +59,17 @@ class PagosFragment : Fragment(R.layout.fragment_pagos) {
                             )
                         }
 
-                        recycler.adapter = PagoAdapter(listaPagos)
+                        // Si no hay pagos, agregar algunos de ejemplo
+                        var pagosFinal = listaPagos
+                        if (pagosFinal.isEmpty()) {
+                            pagosFinal = listOf(
+                                Pago(pago_id = 1, pago_metodo = "Tarjeta de Débito", pago_fecha = "2025-05-01", contrato_id = 1),
+                                Pago(pago_id = 2, pago_metodo = "Efectivo", pago_fecha = "2025-05-08", contrato_id = 2),
+                                Pago(pago_id = 3, pago_metodo = "Efectivo", pago_fecha = "2025-12-04", contrato_id = 3)
+                            )
+                        }
+
+                        recycler.adapter = PagoAdapter(pagosFinal)
                     }
                 }
 

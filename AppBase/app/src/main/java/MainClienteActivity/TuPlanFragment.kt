@@ -1,4 +1,4 @@
-package MainClienteActivity
+package com.example.appinterface.MainClienteActivity
 
 import android.content.Context
 import android.os.Bundle

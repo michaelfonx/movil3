@@ -72,7 +72,7 @@ class DetalleProductoActivity : AppCompatActivity() {
 
                         val body = mapOf(
                             "contrato_id" to contratoId,
-                            "producto_id" to producto.producto_id
+                            "producto_id" to producto.producto_id!!
                         )
 
                         RetrofitInstance.api.agregarProductoContrato(body)

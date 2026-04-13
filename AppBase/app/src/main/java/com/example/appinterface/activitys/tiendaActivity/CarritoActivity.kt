@@ -25,8 +25,14 @@ class CarritoActivity : AppCompatActivity() {
         val recycler = findViewById<RecyclerView>(R.id.recyclerCarrito)
         val txtTotal = findViewById<TextView>(R.id.txtTotal)
         val btnPagar = findViewById<TextView>(R.id.btnPagar)
+        val btnAtras = findViewById<android.widget.Button>(R.id.btnAtras)
+
+        btnAtras.setOnClickListener {
+            finish()
+        }
 
         recycler.layoutManager = LinearLayoutManager(this)
+        txtTotal.text = "Total: $0.0"
 
         val sharedPref = getSharedPreferences("APP_PREFS", MODE_PRIVATE)
         val usuarioId = sharedPref.getInt("USUARIO_ID", 0)
@@ -35,6 +41,8 @@ class CarritoActivity : AppCompatActivity() {
             Toast.makeText(this, "Debe iniciar sesión", Toast.LENGTH_SHORT).show()
             return
         }
+
+        var totalCarrito = 0.0
 
         RetrofitInstance.carritoApi.obtenerCarrito(usuarioId)
             .enqueue(object : Callback<List<Carrito>> {
@@ -46,17 +54,28 @@ class CarritoActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
 
                         val lista = (response.body() ?: emptyList()).toMutableList()
+                        if (lista.isEmpty()) {
+                            txtTotal.text = "Carrito vacío"
+                        }
 
                         val adapter = CarritoAdapter(lista) { total ->
+                            totalCarrito = total
                             txtTotal.text = "Total: $ $total"
                         }
 
                         recycler.adapter = adapter
 
                         btnPagar.setOnClickListener {
+                            if (totalCarrito <= 0.0) {
+                                Toast.makeText(this@CarritoActivity, "Selecciona al menos un producto", Toast.LENGTH_SHORT).show()
+                                return@setOnClickListener
+                            }
                             val intent = Intent(this@CarritoActivity, PagoCarritoActivity::class.java)
+                            intent.putExtra("TOTAL", totalCarrito)
                             startActivity(intent)
                         }
+                    } else {
+                        Toast.makeText(this@CarritoActivity, "Error al cargar carrito", Toast.LENGTH_SHORT).show()
                     }
                 }
 

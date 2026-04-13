@@ -20,6 +20,11 @@ class PagoCarritoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pago_carrito)
 
+        val btnAtras = findViewById<Button>(R.id.btnAtras)
+        btnAtras.setOnClickListener {
+            finish()
+        }
+
         val total = intent.getDoubleExtra("TOTAL", 0.0)
 
         val txtTotal = findViewById<TextView>(R.id.txtTotalPago)

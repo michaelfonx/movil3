@@ -1,6 +1,7 @@
 package com.example.appinterface.activitys.tiendaActivity
 
 import android.os.Bundle
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +24,10 @@ class SubcategoriaActivity : AppCompatActivity() {
         recycler.layoutManager = GridLayoutManager(this, 2)
         recycler.setHasFixedSize(true)
 
+        val btnAtras = findViewById<Button>(R.id.btnAtras)
+        btnAtras.setOnClickListener {
+            finish()
+        }
 
         recycler.addItemDecoration(
             GridSpacingItemDecoration(2, 30, true)
@@ -42,10 +47,19 @@ class SubcategoriaActivity : AppCompatActivity() {
                     call: Call<List<Subcategoria>>,
                     response: Response<List<Subcategoria>>
                 ) {
-                    if (response.isSuccessful) {
-                        recycler.adapter =
-                            SubcategoriaAdapter(response.body() ?: emptyList())
+                    var subcategorias = response.body() ?: emptyList()
+
+                    // Si no hay subcategorías, agregar algunas de ejemplo
+                    if (subcategorias.isEmpty()) {
+                        subcategorias = listOf(
+                            Subcategoria(subcategoria_id = 1, subcategoria_nombre = "Tamaño Grande", categoria_id = id),
+                            Subcategoria(subcategoria_id = 2, subcategoria_nombre = "Tamaño Mediano", categoria_id = id),
+                            Subcategoria(subcategoria_id = 3, subcategoria_nombre = "Tamaño Pequeño", categoria_id = id)
+                        )
                     }
+
+                    recycler.adapter =
+                        SubcategoriaAdapter(subcategorias)
                 }
 
                 override fun onFailure(call: Call<List<Subcategoria>>, t: Throwable) {}

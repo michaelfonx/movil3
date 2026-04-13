@@ -27,7 +27,10 @@
         </activity>
         <activity android:name=".activitys.activityUsuarios.EditarPerfilActivity"/>
         <activity android:name=".activitys.activityUsuarios.RegistroActivity"/>
+        <activity android:name=".activitys.rolesActivity.AdminActivity"/>
+        <activity android:name=".activitys.rolesActivity.AsesorActivity"/>
         <activity android:name=".MainClienteActivity.MainClienteActivity"/>
+        <activity android:name=".MainAdminActivity.MainAdminActivity"/>
         <activity android:name=".activitys.ServiciosActivity"/>
         <activity android:name=".activitys.activityContrato.BuscarContratoActivity"/>
         <activity android:name=".activitys.activityContrato.CrearContratoActivity"/>

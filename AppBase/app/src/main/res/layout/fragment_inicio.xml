@@ -81,6 +81,7 @@
             app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
+                android:id="@+id/txtServiciosAdicionales"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Servicios adicionales"
@@ -90,6 +91,22 @@
 
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerPlanes"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginBottom="16dp"/>
+
+        <TextView
+                android:id="@+id/txtUsuariosActuales"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Usuarios actuales"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginBottom="12dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerUsuarios"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"/>

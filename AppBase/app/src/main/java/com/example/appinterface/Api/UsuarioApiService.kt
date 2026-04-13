@@ -35,11 +35,14 @@ interface UsuarioApiService {
         @Path("id") id: Int
     ): Call<Usuario>
 
+    @GET("api/usuarios")
+    fun obtenerUsuarios(): Call<List<Usuario>>
 
     @GET("api/usuarios/documento/{doc}")
     fun buscarPorDocumento(
         @Path("doc") doc: Int
     ): Call<Usuario>
+
     @GET("api/usuarios/{id}")
     fun obtenerUsuarioPorId(
         @Path("id") id: Int

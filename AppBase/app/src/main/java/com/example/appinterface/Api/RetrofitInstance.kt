@@ -25,6 +25,8 @@ object RetrofitInstance {
             .build()
     }
 
+    fun getInstance(): Retrofit = retrofit
+
     val carritoApi: CarritoApiService by lazy {
         retrofit.create(CarritoApiService::class.java)
     }
@@ -68,6 +70,7 @@ object RetrofitInstance {
     val afiliadoApi: AfiliadoApiService by lazy {
         retrofit.create(AfiliadoApiService::class.java)
     }
+
     val contratoApi: ContratoApiService by lazy {
         retrofit.create(ContratoApiService::class.java)
     }

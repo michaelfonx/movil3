@@ -155,7 +155,7 @@ class AfiliadosFragment : Fragment(R.layout.fragment_afiliados) {
                     btnAgregar.text = "Agregar afiliado"
 
                     btnAgregar.setOnClickListener {
-                        agregarAfiliadoPorDocumento(usuario.usuario_documento as Long, view)
+                        agregarAfiliadoPorDocumento(usuario.usuario_documento, view)
                     }
 
                     val container = card.findViewById<LinearLayout>(R.id.containerCard)
@@ -170,14 +170,14 @@ class AfiliadosFragment : Fragment(R.layout.fragment_afiliados) {
             })
     }
 
-    private fun agregarAfiliadoPorDocumento(documento: Long, view: View) {
+    private fun agregarAfiliadoPorDocumento(documento: Int, view: View) {
 
         val body = mapOf(
             "contrato_id" to contratoId,
             "documento" to documento
         )
 
-        RetrofitInstance.afiliadoApi.agregarAfiliadoPorDocumento(body as Map<String, Int>)
+        RetrofitInstance.afiliadoApi.agregarAfiliadoPorDocumento(body)
             .enqueue(object : Callback<ResponseBody> {
 
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -188,9 +188,7 @@ class AfiliadosFragment : Fragment(R.layout.fragment_afiliados) {
                         return
                     }
 
-                    val mensaje = response.body()?.string() ?: "Sin respuesta"
-
-                    Toast.makeText(context, mensaje, Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "Afiliado agregado", Toast.LENGTH_LONG).show()
 
                     cargarAfiliados(view)
                 }

@@ -29,6 +29,11 @@ class PagoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pago)
 
+        val btnAtras = findViewById<Button>(R.id.btnAtras)
+        btnAtras.setOnClickListener {
+            finish()
+        }
+
         clienteId = intent.getIntExtra("CLIENTE_ID", 0)
         planId = intent.getIntExtra("PLAN_ID", 0)
         valor = intent.getDoubleExtra("VALOR", 0.0)

@@ -2,7 +2,7 @@ package com.example.appinterface.model
 import java.io.Serializable
 
 data class Producto(
-    val producto_id: Int,
+    val producto_id: Int? = null,
     val producto_nombre: String,
     val producto_descripcion: String,
     val producto_precio: Double,

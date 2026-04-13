@@ -1,5 +1,20 @@
-<androidx.recyclerview.widget.RecyclerView
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btnAtras"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Atrás"
+        android:layout_margin="16dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerProductos"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="12dp" xmlns:android="http://schemas.android.com/apk/res/android"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="12dp" />
+
+</LinearLayout>
